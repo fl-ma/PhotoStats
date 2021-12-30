@@ -1,0 +1,5 @@
+# This syntax tells git to ignore the files but not the folder itself
+*
+*/
+!.gitignore
+!example_paths.json

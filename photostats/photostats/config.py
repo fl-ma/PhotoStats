@@ -2,31 +2,33 @@ import json, os
 from pathlib import Path
 
 
-
-# config_path = os.path.realpath(os.path.join(os.path.dirname(__file__), '.', 'config', 'paths.json'))
-
-#go 3 levels up from current file (needs to be adjusted when config.py is moved)
-p = Path(__file__)
-parts = p.parts[:-3]
+def read_config_var(var_name):
 
 
-for idx, step in enumerate(parts):
-
-    if idx == 0:
-        config_path = os.path.realpath(step)
-
-    else:
-        config_path = os.path.realpath(os.path.join(config_path, step))
+    #go 3 levels up from current file (needs to be adjusted when config.py is moved)
+    p = Path(__file__)
+    parts = p.parts[:-3]
 
 
-#add location of config json
-config_path = os.path.realpath(os.path.join(config_path, 'config', 'paths.json'))
+    for idx, step in enumerate(parts):
 
-print(config_path)
+        if idx == 0:
+            config_path = os.path.realpath(step)
 
-with open(config_path) as f:
-   data = json.load(f)
+        else:
+            config_path = os.path.realpath(os.path.join(config_path, step))
 
-f.close()
 
-print(data)
+    #add location of config json
+    config_path = os.path.realpath(os.path.join(config_path, 'config', 'paths.json'))
+
+    #load JSON
+    with open(config_path) as f:
+        data = json.load(f)
+
+    f.close()
+
+    return data.get(var_name)
+
+
+

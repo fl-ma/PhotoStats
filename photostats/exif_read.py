@@ -1,8 +1,7 @@
 import exifread
-from config import paths
+from photostats.config import read_config_var
 
-
-path_name = paths.PHOTO_EXAMPLE
+path_name = read_config_var("photo_example")
 
 
 # Open image file for reading (binary mode)

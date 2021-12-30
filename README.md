@@ -1,0 +1,2 @@
+# PhotoStats
+Statistics about photos

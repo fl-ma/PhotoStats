@@ -1,0 +1,19 @@
+{% if image_list %}
+    <table>
+        <tr>
+          <th>filename</th>
+          <th>path</th>
+          <th>date taken</th>
+        </tr>
+        {% for image in image_list %}
+        <tr>
+          <td><b>{{ image.filename }}</b></td>
+          <td>{{ image.path }}</td>
+          <td>{{ image.date_taken }}</td>
+        </tr>
+        {% endfor %}
+      </table> 
+
+{% else %}
+    <p>No images are available.</p>
+{% endif %}

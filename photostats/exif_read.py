@@ -26,5 +26,5 @@ for filename in os.listdir(dir):
     f.close()
 
     for tag in tags.keys():
-        if tag not in ('JPEGThumbnail', 'TIFFThumbnail', 'Filename', 'EXIF MakerNote'):
+        if tag not in ('JPEGThumbnail', 'TIFFThumbnail', 'Filename', 'EXIF MakerNote', 'Thumbnail'):
             print ("Key: %s, value %s" % (tag, tags[tag]))

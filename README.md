@@ -2,37 +2,37 @@
 Statistics about photos
 
 
-## DEV setup
-1. Setup VENV
-```
-python3 -m venv .venv
-```
-
-2. Setup DJANGO (not needed, only for doc)
-    2.1 $ django-admin startproject photostats (not needed, only for doc)
-    2.2 $ python manage.py startapp images (not needed, only for doc)
-    2.3 $ python manage.py migrate
-    2.4 $ python manage.py createsuperuser
-
-After changes to Models:
-    2.4 $ python manage.py makemigrations <app>
-    2.5 $ python manage.py sqlmigrate images 0001
-    2.6 $ python manage.py migrate
-
-3. Configuration
+## Configuration
 3.1 Remove 'example_' from files in [config](.config/)
 3.2 Maintain variables in there.
 
-
-4. Run
+## Run
 ```
 $ cd photostats
 $ python manage.py runserver
 ```
 
+## DEV setup
+
+### VENV
+```
+python3 -m venv .venv
+```
+
+### DJANGO
+(This is documentation only, not needed locally)
+- $ django-admin startproject photostats (not needed, only for doc)
+- $ python manage.py startapp images (not needed, only for doc)
+- $ python manage.py migrate
+- $ python manage.py createsuperuser
+
+#### After changes to Models:
+- $ python manage.py makemigrations <app>
+- $ python manage.py sqlmigrate images 0001
+- $ python manage.py migrate
+
 ### Dependencies
-See [./requirements.txt](./requirements.txt) 
-Install with
+See [./requirements.txt](./requirements.txt), install with:
 ```
 $ pip install -r requirements.txt
 ```

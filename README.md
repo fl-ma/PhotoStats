@@ -40,3 +40,7 @@ See [./requirements.txt](./requirements.txt), install with:
 ```
 $ pip install -r requirements.txt
 ```
+
+#### Debugging Django
+Seems to be a bit buggy. Make sure to not only install VSCode extension "Python" but also "Python Extension Pack".
+Restarting Code and killing all breakpoints seems also to help (sometimes).

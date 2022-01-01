@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseServerError
 from django.template import loader
+from . import ImporterLogic
 
 def index(request):
     # https://docs.djangoproject.com/en/4.0/intro/tutorial04/
@@ -23,11 +24,25 @@ def action(request):
     if not button:
         button = request.POST.get('import')
     
-    if not button:
-        text = "Button clicked is unknown: " + button
-        return HttpResponseServerError(text)
-    
-    else:
-        text = "Congrats, you clicked: " + button
+    #handle buttons        
+    if button == 'List':
+        print(button)
         
-        return HttpResponse(text)
+    elif button == 'Delete':
+        print(button)
+        
+    elif button =='Import':
+        try:
+            ImporterLogic.do_import(request.POST.get('Ipath'))
+            
+        except Exception as inst:
+            text = str(inst)
+            return HttpResponseServerError(text)
+        
+        else:
+            return HttpResponse("Worked!")
+        
+    else:
+            text = "Button clicked is unknown: " + button
+            return HttpResponseServerError(text)
+        

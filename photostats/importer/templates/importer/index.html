@@ -1,0 +1,23 @@
+<form action="{% url 'importer:action' %}" method="post">
+    {% csrf_token %}
+
+    <fieldset>
+        <legend><h1>Importer</h1></legend>
+        <label for="Ipath">Path</label><br>
+        <input type="text" id="Ipath" name="Ipath" value="{{ importer.import_path }}"><br>
+
+    </fieldset>
+
+    <!--
+    <fieldset>
+        <legend><h1>{{ question.question_text }}</h1></legend>
+        {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+        {% for choice in question.choice_set.all %}
+            <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+            <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+        {% endfor %}
+    </fieldset> -->
+    <input type="submit" value="List">
+    <input type="submit" value="Delete">
+    <input type="submit" value="Import">
+</form>

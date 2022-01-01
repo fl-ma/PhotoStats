@@ -3,14 +3,18 @@ Statistics about photos
 
 
 ## Configuration
-3.1 Remove 'example_' from files in [config](.config/)
-3.2 Maintain variables in there.
+1. Remove 'example_' from files in [config](./config/)
+2. Maintain variables in there.
 
 ## Run
 ```
 $ cd photostats
 $ python manage.py runserver
 ```
+
+### Access
+- [Admin overview](http://localhost:8000/admin/)
+- [Image list](http://localhost:8000/images/)
 
 ## DEV setup
 

@@ -2,7 +2,7 @@ import os.path
 import exifread, os
 from photostats.constants import PHOTO_FILETYPES
 import images.models
-from images.models import Image
+from images.models import Image, format_datetime
 
 def validate_path(mypath):
     
@@ -42,11 +42,13 @@ def do_import(path):
         
         img.filename = filename
         img.path = path
-        img.date_taken = tags.get('date_taken')
+        img.date_taken = format_datetime(tags.get('EXIF DateTimeOriginal'))
         
         img.camera_make =   tags.get('Image Make')
         img.camera_model =  tags.get('Image Model')
-        img.lens_model =    tags.get('LensModel')     
+        img.lens_model =    tags.get('EXIF LensModel')     
+        
+        img.save()
         
         images.append(img)
         

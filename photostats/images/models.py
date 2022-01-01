@@ -9,7 +9,7 @@ class Image(models.Model):
 
     camera_make =   models.CharField(max_length=100)
     camera_model =  models.CharField(max_length=100)
-    lens_model =    models.CharField(max_length=100)
+    lens_model =    models.CharField(max_length=100, null=True)
     
     # https://docs.djangoproject.com/en/4.0/intro/tutorial02/
 
@@ -32,3 +32,19 @@ class Image(models.Model):
 
 # Key: EXIF ExposureTime, value 1/400
 # Key: EXIF FNumber, value 11
+
+
+def format_datetime(input):
+    # 2017:07:04 19:07:42
+    # It must be in YYYY-MM-DD HH:MM[:ss
+    date = str(input).strip()
+    date = str(date[:10])
+    elements = date.split(":")
+    date = '-'.join(elements)
+    
+    time = str(input).strip()
+    time = time[11:]
+    
+    out = str(date + " " + time )
+    
+    return out

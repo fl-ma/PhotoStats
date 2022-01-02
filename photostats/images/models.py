@@ -1,4 +1,5 @@
 from django.db import models
+from fractions import Fraction
 
 # Create your models here.
 
@@ -35,6 +36,20 @@ class Image(models.Model):
 
     def __str__(self):
         return (self.path + self.filename)
+    
+    @property
+    def fracExpTime(self):
+        
+        if self.exposure_time >= 1:
+            return self.exposure_time
+        
+        else:
+            fract = Fraction(self.exposure_time).limit_denominator(1000)
+            return str(fract)
+        
+    @property
+    def fracAperture(self):
+        return float_to_fraction(self.aperture)
 
 
 def format_datetime(input):
@@ -61,3 +76,6 @@ def fraction_to_float(input):
         
     else:
         return float(inp_str)
+    
+def float_to_fraction(input):
+    return "1/120"

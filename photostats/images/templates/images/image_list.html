@@ -1,0 +1,32 @@
+{% if image_list %}
+    <table>
+        <tr>
+          <th>filename</th>
+          <th>path</th>
+          <th>date taken</th>
+          <th>Camera make</th>
+          <th>Camera model</th>
+          <th>Lens model</th>
+          <th>Focal length</th>
+          <th>Exposure time</th>
+          <th>Aperture</th>
+        </tr>
+        {% for image in image_list %}
+        <tr>
+          <td><b>{{ image.filename }}</b></td>
+          <td>{{ image.path }}</td>
+          <td>{{ image.date_taken }}</td>
+
+          <td>{{ image.camera_make }}</td>
+          <td>{{ image.camera_model }}</td>
+          <td>{{ image.lens_model }}</td>
+          <td>{{ image.focal_length }}</td>
+          <td>{{ image.exposure_time }}</td>
+          <td>{{ image.aperture }}</td>     
+        </tr>
+        {% endfor %}
+      </table> 
+
+{% else %}
+    <p>No images are available.</p>
+{% endif %}

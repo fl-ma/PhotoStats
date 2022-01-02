@@ -30,6 +30,12 @@ class Image(models.Model):
 # Key: GPS GPSMapDatum, value WGS-84
 # Key: GPS GPSDate, value 2019:03:28
 
+    class Meta:
+        ordering = ["-filename"]
+
+    def __str__(self):
+        return (self.path + self.filename)
+
 
 def format_datetime(input):
     # 2017:07:04 19:07:42

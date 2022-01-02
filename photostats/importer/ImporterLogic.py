@@ -1,8 +1,5 @@
 import os.path 
-import exifread, os
-from photostats.constants import PHOTO_FILETYPES
-import images.models
-from images.models import Image, format_datetime
+from images.imageFactory import createImage
 
 def validate_path(mypath):
     
@@ -18,40 +15,16 @@ def do_import(path):
     images = []
 
     for filename in os.listdir(path):
-
-        #construct path and filetype
-        filepath = os.path.realpath(os.path.join(path, filename))
-        name, extension = os.path.splitext(filepath)
-
-        #filter for photo files only (exclude .dlls, .txts, etc)
-        if extension not in PHOTO_FILETYPES:
+        try:
+            img = createImage(path, filename)
+            
+        except OSError as inst:
+            #filetype does not match (e.g. txt, dll)
             continue
 
-        # Open image file for reading (binary mode)
-        f = open(filepath, 'rb')
-
-        # Read Exif tags
-        tags = exifread.process_file(f)
-
-        #close file
-        f.close()
-
-
-        #map exif tags to model        
-        img = Image()
-        
-        img.filename = filename
-        img.path = path
-        img.date_taken = format_datetime(tags.get('EXIF DateTimeOriginal'))
-        
-        img.camera_make =   tags.get('Image Make')
-        img.camera_model =  tags.get('Image Model')
-        img.lens_model =    tags.get('EXIF LensModel')     
         
         img.save()
         
         images.append(img)
         
-        
     return images
-

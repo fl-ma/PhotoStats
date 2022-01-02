@@ -1,8 +1,9 @@
 import os.path 
 import errno
 import exifread, os
+from fractions import Fraction
+
 from photostats.constants import PHOTO_FILETYPES
-import images.models
 from images.models import Image, format_datetime, fraction_to_float
 
 
@@ -40,6 +41,8 @@ def createImage(path, filename):
     img.focal_length        = fraction_to_float(tags.get('EXIF FocalLength'))
     img.exposure_time       = fraction_to_float(tags.get('EXIF ExposureTime'))
     img.aperture            = fraction_to_float(tags.get('EXIF FNumber'))
-    # print(img.filename, tags.get('EXIF FocalLength'), tags.get('EXIF ExposureTime'), tags.get('EXIF FNumber'))
+    
+    img.exposure_time_str   = tags.get('EXIF ExposureTime').printable   
+    img.aperture_str        = tags.get('EXIF FNumber').printable
     
     return img

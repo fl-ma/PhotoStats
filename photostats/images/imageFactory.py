@@ -7,15 +7,13 @@ from photostats.constants import PHOTO_FILETYPES
 from images.models import Image, format_datetime, fraction_to_float
 
 
-def createImage(path, filename):
+def createImage(filepath):
     
-    #construct path and filetype
-    filepath = os.path.realpath(os.path.join(path, filename))
     name, extension = os.path.splitext(filepath)
 
     #filter for photo files only (exclude .dlls, .txts, etc)
     if extension not in PHOTO_FILETYPES:
-        raise OSError(errno.EIO, "Filetype not supported", filename)
+        raise OSError(errno.EIO, "Filetype not supported", name)
        
     # Open image file for reading (binary mode)
     f = open(filepath, 'rb')
@@ -29,9 +27,8 @@ def createImage(path, filename):
  
     #map exif tags to data model
     img = Image()
-        
-    img.filename = filename
-    img.path = path
+    
+    img.path, img.filename = os.path.split(filepath)
     img.date_taken = format_datetime(tags.get('EXIF DateTimeOriginal'))
         
     img.camera_make     = tags.get('Image Make')

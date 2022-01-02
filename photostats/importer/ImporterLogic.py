@@ -9,22 +9,28 @@ def validate_path(mypath):
     if not os.path.isdir(mypath):
         raise OSError(str("path: " + mypath + " is invalid"))
 
-def do_import(path):
+def do_import(path, recursive=False):
     
     validate_path(path) 
     images = []
 
     for filename in os.listdir(path):
+        
+        filepath = os.path.realpath(os.path.join(path, filename))
+        
+        if recursive and os.path.isdir(filepath):
+            sub_imgs = do_import(filepath, True)
+            
+            for img in sub_imgs:
+                images.append(img)
+        
         try:
-            img = createImage(path, filename)
+            img = createImage(filepath)
             
         except OSError as inst:
             #filetype does not match (e.g. txt, dll)
             continue
-
-        
-        img.save()
-        
-        images.append(img)
+    
+        images.append(img) 
         
     return images

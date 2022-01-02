@@ -32,15 +32,25 @@ def action(request):
         print(button)
         
     elif button =='Import':
+        
+        if request.POST.get('recursion') == 'recursion':
+            recursive_scan = True
+        else:
+            recursive_scan = False
+        
         try:
-            ImporterLogic.do_import(request.POST.get('Ipath'))
+            images = ImporterLogic.do_import(request.POST.get('Ipath'), recursive_scan)
+            
+                
+            for img in images:
+                img.save()
             
         except Exception as inst:
             text = str(inst)
             return HttpResponseServerError(text)
         
         else:
-            return HttpResponse("Worked!")
+            return HttpResponse( str(len(images)) + " images successfully imported!")
         
     else:
             text = "Button clicked is unknown: " + button

@@ -56,7 +56,10 @@ def format_datetime(input):
 def fraction_to_float(input):
     inp_str = str(input)
     
-    if inp_str.find("/") > 0:
+    if not input:
+        return 0.0
+    
+    elif inp_str.find("/") > 0:
         parts = inp_str.split("/")
         return int(parts[0]) / int(parts[1])
         

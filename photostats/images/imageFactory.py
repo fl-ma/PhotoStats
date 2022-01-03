@@ -5,6 +5,7 @@ from fractions import Fraction
 
 from photostats.constants import PHOTO_FILETYPES
 from images.models import Image, format_datetime, fraction_to_float
+from images.imageError import ExifError
 
 
 def createImage(filepath):
@@ -20,10 +21,13 @@ def createImage(filepath):
 
     # Read Exif tags 
     # (speed up processing by ignoring thumbnail and makernotes)
-    tags = exifread.process_file(f, details=False)
+    tags = exifread.process_file(f, details=True, strict=True)
 
     #close file
     f.close()
+    
+    if not tags:
+        raise ExifError(filepath, "No exif tags found")
  
     #map exif tags to data model
     img = Image()

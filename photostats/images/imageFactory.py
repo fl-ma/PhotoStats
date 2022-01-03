@@ -1,11 +1,12 @@
 import os.path 
 import errno
-import exifread, os
+import os
 from fractions import Fraction
 
 from photostats.constants import PHOTO_FILETYPES
 from images.models import Image, format_datetime, fraction_to_float
 from images.imageError import ExifError
+from images.imageExif import read
 
 
 def createImage(filepath):
@@ -16,15 +17,8 @@ def createImage(filepath):
     if extension not in PHOTO_FILETYPES:
         raise OSError(errno.EIO, "Filetype not supported", name)
        
-    # Open image file for reading (binary mode)
-    f = open(filepath, 'rb')
-
     # Read Exif tags 
-    # (speed up processing by ignoring thumbnail and makernotes)
-    tags = exifread.process_file(f, details=True, strict=True)
-
-    #close file
-    f.close()
+    tags = read(filepath)
     
     if not tags:
         raise ExifError(filepath, "No exif tags found")
@@ -33,17 +27,17 @@ def createImage(filepath):
     img = Image()
     
     img.path, img.filename = os.path.split(filepath)
-    img.date_taken = format_datetime(tags.get('EXIF DateTimeOriginal'))
+    img.date_taken = format_datetime(tags.get('DateTimeOriginal'))
         
-    img.camera_make     = tags.get('Image Make')
-    img.camera_model    = tags.get('Image Model')
-    img.lens_model      = tags.get('EXIF LensModel')     
+    img.camera_make     = tags.get('Make')
+    img.camera_model    = tags.get('Model')
+    img.lens_model      = tags.get('LensModel')     
         
-    img.focal_length        = fraction_to_float(tags.get('EXIF FocalLength'))
-    img.exposure_time       = fraction_to_float(tags.get('EXIF ExposureTime'))
-    img.aperture            = fraction_to_float(tags.get('EXIF FNumber'))
+    img.focal_length        = tags.get('FocalLength')
+    img.exposure_time       = tags.get('ExposureTime')
+    img.aperture            = tags.get('FNumber')
     
-    img.exposure_time_str   = tags.get('EXIF ExposureTime').printable   
-    img.aperture_str        = tags.get('EXIF FNumber').printable
+    # img.exposure_time_str   = tags.get('EXIF ExposureTime').printable   
+    # img.aperture_str        = tags.get('EXIF FNumber').printable
     
     return img

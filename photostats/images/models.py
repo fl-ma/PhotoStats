@@ -12,24 +12,6 @@ class Image(models.Model):
     focal_length =  models.PositiveSmallIntegerField(null=True)
     exposure_time = models.FloatField(null=True)
     aperture =      models.FloatField(null=True)
-    
-    exposure_time_str = models.CharField(max_length=15, null=True)
-    aperture_str =      models.CharField(max_length=15, null=True)
-    
-    # https://docs.djangoproject.com/en/4.0/intro/tutorial02/
-
-# Key: GPS GPSVersionID, value [2, 2, 0, 0]
-# Key: GPS GPSLatitudeRef, value S
-# Key: GPS GPSLatitude, value [41, 16, 3099/625]
-# Key: GPS GPSLongitudeRef, value E
-# Key: GPS GPSLongitude, value [173, 47, 1181/619]
-# Key: GPS GPSAltitudeRef, value 0
-# Key: GPS GPSAltitude, value 128492/957
-# Key: GPS GPSTimeStamp, value [0, 5, 44]
-# Key: GPS GPSSpeedRef, value K
-# Key: GPS GPSSpeed, value 6574/1255
-# Key: GPS GPSMapDatum, value WGS-84
-# Key: GPS GPSDate, value 2019:03:28
 
     class Meta:
         ordering = ["-filename"]

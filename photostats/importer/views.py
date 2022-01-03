@@ -26,10 +26,10 @@ def action(request):
     
     #handle buttons        
     if button == 'List':
-        print(button)
+        return HttpResponseServerError('List - not yet implemented')
         
     elif button == 'Delete':
-        print(button)
+        return HttpResponseServerError('Delete - not yet implemented')
         
     elif button =='Import':
         
@@ -37,9 +37,14 @@ def action(request):
             recursive_scan = True
         else:
             recursive_scan = False
+            
+        if request.POST.get('radio_upd') == 'Update':
+            update = True
+        else:
+            update = False
         
         try:
-            images = ImporterLogic.do_import(request.POST.get('Ipath'), recursive_scan)
+            images = ImporterLogic.do_import(request.POST.get('Ipath'), recursive_scan, update)
             
                 
             for img in images:

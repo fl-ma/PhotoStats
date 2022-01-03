@@ -5,8 +5,8 @@ Statistics about photos
 ## Open ToDos
 - a naive datetime (2020-06-28 12:03:59) while time zone support is active.
   warnings.warn("DateTimeField %s received a naive datetime (%s)"
-- toggle update/insert
 - model for iPhone?
+- [logging](https://docs.python.org/3/howto/logging.html)
 
 ## Configuration
 1. Remove 'example_' from files in [config](./config/)

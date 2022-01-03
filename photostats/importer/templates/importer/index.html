@@ -9,17 +9,15 @@
         <input type="checkbox" id="cb_recursion" name="recursion" value="recursion" checked>
         <label for="cb_recursion"> Search subfolders</label><br>
 
+        <div>
+            <input type="radio" id="update" name="radio_upd" value="Update" checked>
+            <label for="update">Update</label><br>
+            <input type="radio" id="insert" name="radio_upd" value="Insert">
+            <label for="insert">Insert</label><br>
+        </div>
+
     </fieldset>
 
-    <!--
-    <fieldset>
-        <legend><h1>{{ question.question_text }}</h1></legend>
-        {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-        {% for choice in question.choice_set.all %}
-            <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
-            <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
-        {% endfor %}
-    </fieldset> -->
     <input type="submit" name="list" value="List">
     <input type="submit" name="delete" value="Delete">
     <input type="submit" name="import" value="Import">

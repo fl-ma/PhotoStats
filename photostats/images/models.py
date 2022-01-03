@@ -3,10 +3,10 @@ from django.db import models
 class Image(models.Model):
     filename = models.CharField(max_length=200)
     path =  models.CharField(max_length=200)
-    date_taken = models.DateTimeField()
+    date_taken = models.DateTimeField(null=True)
 
-    camera_make =   models.CharField(max_length=100)
-    camera_model =  models.CharField(max_length=100)
+    camera_make =   models.CharField(max_length=100, null=True)
+    camera_model =  models.CharField(max_length=100, null=True)
     lens_model =    models.CharField(max_length=100, null=True)
     
     focal_length =  models.PositiveSmallIntegerField(null=True)

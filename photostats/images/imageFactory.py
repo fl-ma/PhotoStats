@@ -9,9 +9,13 @@ from images.imageError import ExifError
 from images.imageExif import read
 
 
-def createImage(filepath):
-    
+def createImage(filepath, update=False):
+    '''
+        update  =   true    -> query database and update existing files
+                    false   -> crate without query (might result in duplicates)
+    '''    
     name, extension = os.path.splitext(filepath)
+    path, filename  = os.path.split(filepath)
 
     #filter for photo files only (exclude .dlls, .txts, etc)
     if extension not in PHOTO_FILETYPES:
@@ -22,22 +26,27 @@ def createImage(filepath):
     
     if not tags:
         raise ExifError(filepath, "No exif tags found")
- 
-    #map exif tags to data model
-    img = Image()
+     
+    if update:
+        try:
+            img = Image.objects.get(path=path, filename=filename)
+        except:
+            img = Image()
     
-    img.path, img.filename = os.path.split(filepath)
+    else:
+        img = Image()
+    
+    #map exif tags to data model
+    img.path       = path
+    img.filename   = filename
     img.date_taken = format_datetime(tags.get('DateTimeOriginal'))
         
     img.camera_make     = tags.get('Make')
     img.camera_model    = tags.get('Model')
     img.lens_model      = tags.get('LensModel')     
         
-    img.focal_length        = tags.get('FocalLength')
-    img.exposure_time       = tags.get('ExposureTime')
-    img.aperture            = tags.get('FNumber')
-    
-    # img.exposure_time_str   = tags.get('EXIF ExposureTime').printable   
-    # img.aperture_str        = tags.get('EXIF FNumber').printable
+    img.focal_length    = tags.get('FocalLength')
+    img.exposure_time   = tags.get('ExposureTime')
+    img.aperture        = tags.get('FNumber')
     
     return img

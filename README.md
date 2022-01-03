@@ -3,8 +3,8 @@ Statistics about photos
 
 
 ## Open ToDos
-- display logging results at the end of processing
 - enable list/delete buttons
+- camera model
 - trips/events model
 
 ## Configuration
@@ -18,7 +18,7 @@ $ python manage.py runserver
 ```
 
 ### Hints
-- Logging goes to 'BASE_DIR / 'logging.log'
+- Logging goes to 'BASE_DIR / 'import.log'
 
 
 ### Access

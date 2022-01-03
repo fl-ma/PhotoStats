@@ -2,7 +2,6 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseServerError
 from django.template import loader
 from . import ImporterLogic
-import logging
 
 def index(request):
     # https://docs.djangoproject.com/en/4.0/intro/tutorial04/
@@ -45,18 +44,19 @@ def action(request):
             update = False
         
         try:
-            images = ImporterLogic.do_import(request.POST.get('Ipath'), recursive_scan, update)
-            
-                
-            for img in images:
-                img.save()
+            status_list = ImporterLogic.do_import(request.POST.get('Ipath'), recursive_scan, update)
             
         except Exception as inst:
             text = str(inst)
             return HttpResponseServerError(text)
         
         else:
-            return HttpResponse( str(len(images)) + " images successfully imported!")
+            # return HttpResponse( str(len(images)) + " images successfully imported!")            
+            template = loader.get_template('importer/import_status.html')
+            context = {
+                'import_list': status_list
+            }
+            return HttpResponse(template.render(context, request))
         
     else:
             text = "Button clicked is unknown: " + button

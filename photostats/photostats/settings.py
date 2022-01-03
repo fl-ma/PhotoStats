@@ -129,14 +129,25 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
+        },
+    },
     'handlers': {
         'console': {
             'class': 'logging.StreamHandler',
             'level': 'WARNING',
         },
-        'file': {
+        'importfile': {
             'class': 'logging.FileHandler',
-            'filename': BASE_DIR / 'logging.log',
+            'filename': BASE_DIR / 'import.log',
+            'formatter': 'simple'
         },
     },
     'loggers': {
@@ -146,7 +157,7 @@ LOGGING = {
         },
         
         'importer': {
-            'handlers': ['console', 'file'],
+            'handlers': ['importfile'],
             'level': 'INFO',
             'propagate': True,
         }

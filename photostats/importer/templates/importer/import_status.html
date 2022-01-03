@@ -1,0 +1,19 @@
+{% if import_list %}
+<table>
+    <tr>
+      {% comment %} <th>path</th>
+      <th>filename</th> {% endcomment %}
+      <th>status</th>
+    </tr>
+    {% for row in import_list %}
+    <tr>
+      <td>{{ row }}</td>
+      {% comment %} <td>{{ row.path }}</td>
+      <td><b>{{ row.filename }}</b></td>
+      <td>{{ row.status }}</td>  {% endcomment %}
+    </tr>
+    {% endfor %}
+  </table> 
+{% else %}
+    <p>No files imported.</p>
+{% endif %}

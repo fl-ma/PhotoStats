@@ -7,7 +7,7 @@ from photostats.constants import PHOTO_FILETYPES
 from images.models import Image, format_datetime, fraction_to_float
 from images.imageError import ExifError
 from images.imageExif import read
-
+import logging
 
 def createImage(filepath, update=False):
     '''
@@ -16,10 +16,14 @@ def createImage(filepath, update=False):
     '''    
     name, extension = os.path.splitext(filepath)
     path, filename  = os.path.split(filepath)
+    
+    logger = logging.getLogger(__name__)
 
     #filter for photo files only (exclude .dlls, .txts, etc)
     if extension not in PHOTO_FILETYPES:
         raise OSError(errno.EIO, "Filetype not supported", name)
+    
+    logger.info(filepath + ":")
        
     # Read Exif tags 
     tags = read(filepath)

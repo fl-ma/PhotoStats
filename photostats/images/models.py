@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import datetime
 
 class Image(models.Model):
     filename = models.CharField(max_length=200)
@@ -22,7 +23,7 @@ class Image(models.Model):
 
 def format_datetime(input):
     # 2017:07:04 19:07:42
-    # It must be in YYYY-MM-DD HH:MM[:ss
+    # It must be in YYYY-MM-DD HH:MM[:ss    
     date = str(input).strip()
     date = str(date[:10])
     elements = date.split(":")
@@ -33,17 +34,7 @@ def format_datetime(input):
     
     out = str(date + " " + time )
     
+    #conversion to ensure format is correct
+    datetime.strptime(out, '%Y-%m-%d %H:%M%S:%f')
+    
     return out
-
-def fraction_to_float(input):
-    inp_str = str(input)
-    
-    if not input:
-        return 0.0
-    
-    elif inp_str.find("/") > 0:
-        parts = inp_str.split("/")
-        return int(parts[0]) / int(parts[1])
-        
-    else:
-        return float(inp_str)

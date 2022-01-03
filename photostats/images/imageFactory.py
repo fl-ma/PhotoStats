@@ -4,7 +4,7 @@ import os
 import logging
 
 from photostats.constants import PHOTO_FILETYPES, IMPORT_LOG_NAME
-from images.models import Image, format_datetime, fraction_to_float
+from images.models import Image, format_datetime
 from images.imageError import ExifError
 from images.imageExif import read
 
@@ -47,11 +47,7 @@ def createImage(filepath, update=False):
     img.path       = path
     img.filename   = filename
     
-    try:
-        img.date_taken = format_datetime(tags.get('DateTimeOriginal'))
-    
-    except:
-        raise ExifError(filepath, "No datetime found or not convertible")
+    img.date_taken = handle_date_taken(tags, filepath)        
         
     img.camera_make     = tags.get('Make')
     img.camera_model    = tags.get('Model')
@@ -62,3 +58,18 @@ def createImage(filepath, update=False):
     img.aperture        = tags.get('FNumber')
     
     return img
+
+
+def handle_date_taken(tags, filepath):
+    
+    try:
+        date_taken = format_datetime(tags.get('DateTimeOriginal'))
+    except:
+        #fallback to other date field
+        date_taken = format_datetime(tags.get('DateTime'))
+    
+    #still nothing? can't use
+    if date_taken is not None:
+        raise ExifError(filepath, "No datetime found or not convertible")
+    
+    return date_taken

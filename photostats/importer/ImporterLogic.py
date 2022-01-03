@@ -34,30 +34,41 @@ def do_import(path, subdir=False, update=False):
     validate_path(path) 
     images = []
 
+    
+    #handle first all images in the folder
     for filename in os.listdir(path):
         
         filepath = os.path.realpath(os.path.join(path, filename))
         
-        if subdir and os.path.isdir(filepath):
-            sub_imgs = do_import(filepath, True)
-            
-            for img in sub_imgs:
-                images.append(img)
+        if os.path.isdir(filepath):
+            #ignore directories here
+            continue
         
         try:
             img = createImage(filepath, update)
             
-        except OSError as inst:
-            #filetype does not match (e.g. txt, dll)
-            
-            if not os.path.isdir(filepath):
-                logger.warning(filepath + " skipped due to filetype")
+        except OSError as inst:            
+            logger.warning(filepath + " skipped due to filetype")
             continue
         
         except ExifError as exc:
-            logger.error(exc.message + 'skipping import')
+            logger.error(exc.filename + ': ' + exc.message + ': skipping import')
             continue
     
         images.append(img)
+        
+    #then handle all subfolders (if required)
+    if subdir:
+    
+        for dir in os.listdir(path):
+            dirpath = os.path.realpath(os.path.join(path, dir))
+            
+            if not os.path.isdir(dirpath):
+                #ignore everything that is not a directory
+                continue
+            
+            sub_imgs = do_import(dirpath, True)
+            
+            images.extend(sub_imgs)   
         
     return images

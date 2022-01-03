@@ -1,13 +1,13 @@
 import os.path 
 import errno
 import os
-from fractions import Fraction
+import logging
 
-from photostats.constants import PHOTO_FILETYPES
+from photostats.constants import PHOTO_FILETYPES, IMPORT_LOG_NAME
 from images.models import Image, format_datetime, fraction_to_float
 from images.imageError import ExifError
 from images.imageExif import read
-import logging
+
 
 def createImage(filepath, update=False):
     '''
@@ -17,7 +17,7 @@ def createImage(filepath, update=False):
     name, extension = os.path.splitext(filepath)
     path, filename  = os.path.split(filepath)
     
-    logger = logging.getLogger()
+    logger = logging.getLogger(IMPORT_LOG_NAME)
 
     #filter for photo files only (exclude .dlls, .txts, etc)
     if extension not in PHOTO_FILETYPES:

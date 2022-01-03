@@ -17,6 +17,10 @@ $ cd photostats
 $ python manage.py runserver
 ```
 
+### Hints
+- Logging goes to 'BASE_DIR / 'logging.log'
+
+
 ### Access
 - [Admin overview](http://localhost:8000/admin/)
 - [Image list](http://localhost:8000/images/)

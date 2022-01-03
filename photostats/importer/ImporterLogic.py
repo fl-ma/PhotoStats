@@ -1,16 +1,19 @@
 import os.path 
 from images.imageFactory import createImage
 import logging
+from datetime import datetime
 
 from images.imageError import ExifError
+from photostats.constants import IMPORT_LOG_NAME
 
 def validate_path(mypath):
     
-    logger = logging.getLogger()
+    logger = logging.getLogger(IMPORT_LOG_NAME)
     
     if not mypath:
         msg = 'No path provided'
         logger.critical(msg)
+        
         raise OSError(msg)
     
     if not os.path.isdir(mypath):
@@ -25,12 +28,11 @@ def do_import(path, subdir=False, update=False):
         update  =   true    -> query database and update existing files
                     false   -> crate without query (might result in duplicates)
     '''
+    logger = logging.getLogger(IMPORT_LOG_NAME)
+    logger.info("Import started: " + str(datetime.now()) + " on folder " + path)
     
     validate_path(path) 
     images = []
-    
-    logger = logging.getLogger()
-    
 
     for filename in os.listdir(path):
         
@@ -56,6 +58,6 @@ def do_import(path, subdir=False, update=False):
             logger.error(exc.message + 'skipping import')
             continue
     
-        images.append(img) 
+        images.append(img)
         
     return images

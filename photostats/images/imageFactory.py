@@ -46,7 +46,12 @@ def createImage(filepath, update=False):
     #map exif tags to data model
     img.path       = path
     img.filename   = filename
-    img.date_taken = format_datetime(tags.get('DateTimeOriginal'))
+    
+    try:
+        img.date_taken = format_datetime(tags.get('DateTimeOriginal'))
+    
+    except:
+        raise ExifError(filepath, "No datetime found or not convertible")
         
     img.camera_make     = tags.get('Make')
     img.camera_model    = tags.get('Model')

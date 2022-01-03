@@ -1,2 +1,2 @@
 
-PHOTO_FILETYPES = ['.JPG', '.jpg']
+PHOTO_FILETYPES = ['.JPG', '.jpg', '.jpeg']

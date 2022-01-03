@@ -7,6 +7,9 @@ def read(path):
     '''
         read exif tags and map them to human-readable format
     '''
+    #silence a PIL warning of too large images
+    Image.MAX_IMAGE_PIXELS = 200000000    
+    
     img = Image.open(path)
     
     exif = img._getexif()

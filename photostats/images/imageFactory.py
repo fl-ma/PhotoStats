@@ -69,7 +69,7 @@ def handle_date_taken(tags, filepath):
         date_taken = format_datetime(tags.get('DateTime'))
     
     #still nothing? can't use
-    if date_taken is not None:
+    if date_taken is None:
         raise ExifError(filepath, "No datetime found or not convertible")
     
     return date_taken

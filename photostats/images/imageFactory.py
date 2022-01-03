@@ -17,7 +17,7 @@ def createImage(filepath, update=False):
     name, extension = os.path.splitext(filepath)
     path, filename  = os.path.split(filepath)
     
-    logger = logging.getLogger(__name__)
+    logger = logging.getLogger()
 
     #filter for photo files only (exclude .dlls, .txts, etc)
     if extension not in PHOTO_FILETYPES:
@@ -34,8 +34,11 @@ def createImage(filepath, update=False):
     if update:
         try:
             img = Image.objects.get(path=path, filename=filename)
+            logger.info("IMG already in database - update")
+            
         except:
             img = Image()
+            logger.info("IMG not found in database - insert")
     
     else:
         img = Image()

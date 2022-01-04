@@ -29,7 +29,7 @@ def action(request):
         return action_list(request)
         
     elif button == 'Delete':
-        return HttpResponseServerError('Delete - not yet implemented')
+        return action_delete(request)
         
     elif button =='Import':
         return action_import(request)
@@ -100,4 +100,17 @@ def action_import(request):
         context = {
             'import_list': status_list
         }
-        return HttpResponse(template.render(context, request))    
+        return HttpResponse(template.render(context, request))
+    
+def action_delete(request):
+
+    try:
+        message = ImporterLogic.delete(request.POST.get('Ipath'))
+        
+    except Exception as inst:
+        text = str(inst)
+        return HttpResponseServerError(text)
+    
+    else:         
+        return HttpResponse(message)
+    

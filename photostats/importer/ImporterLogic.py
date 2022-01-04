@@ -5,6 +5,7 @@ from datetime import datetime
 
 from images.imageError import ExifError
 from photostats.constants import IMPORT_LOG_NAME
+from images.models import Image
 
 def validate_path(mypath):
     
@@ -105,4 +106,14 @@ def import_folder(path, logger, subdir=False, update=False):
     return images
 
         
-        
+def delete(path):
+    
+    validate_path(path)
+    
+    list = Image.objects.filter(path=path)
+    
+    message = str(len(list)) + ' images deleted from path ' + path
+    
+    list.delete()
+    
+    return message

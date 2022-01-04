@@ -1,12 +1,15 @@
 from plotly.offline import plot
 import plotly.graph_objs as go
 
-class FocalLengthDonut:
+from reports.repParent import RepParent
+from images.models import Image
+
+class FocalLengthDonut(RepParent):
     
-    def __init__(self, img_list):
-        
+    def calculate_fig(self):
         
         val = {}
+        img_list = Image.objects.filter(camera__camera_make='Canon')
         
         for img in img_list:
             key = get_range(img.focal_length)
@@ -23,8 +26,6 @@ class FocalLengthDonut:
             myKeys.append(key)
             myValues.append(val[key])
             
-            
-        # self.fig = go.Figure(data=[go.Pie(labels=list(val.keys()), values=list(val.values()), hole=.3)])
         self.fig = go.Figure(data=[go.Pie(labels=myKeys, values=myValues, hole=.3)])
         
 

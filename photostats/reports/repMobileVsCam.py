@@ -1,11 +1,12 @@
 import plotly.graph_objects as go
 from datetime import date, datetime
 
+from reports.repParent import RepParent
 from images.models import Image
 
-class MobileVsCam:
+class MobileVsCam(RepParent):
     
-    def __init__(self):
+    def calculate_fig(self): 
         
         img_list = Image.objects.all().order_by('date_taken')     
         

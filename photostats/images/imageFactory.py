@@ -4,7 +4,7 @@ import os
 import logging
 
 from photostats.constants import PHOTO_FILETYPES, IMPORT_LOG_NAME
-from images.models import Image, format_datetime
+from images.models import Image, Camera, Lens, format_datetime
 from images.imageError import ExifError
 from images.imageExif import read
 
@@ -49,13 +49,22 @@ def createImage(filepath, update=False):
     
     img.date_taken = handle_date_taken(tags, filepath)        
         
-    img.camera_make     = tags.get('Make')
-    img.camera_model    = tags.get('Model')
-    img.lens_model      = tags.get('LensModel')     
-        
     img.focal_length    = tags.get('FocalLength')
     img.exposure_time   = tags.get('ExposureTime')
     img.aperture        = tags.get('FNumber')
+     
+    
+    cam, created = Camera.objects.get_or_create(
+        camera_make=tags.get('Make'), 
+        camera_model=tags.get('Model'))
+    
+    img.camera = cam
+    
+    lens, created = Lens.objects.get_or_create(
+        lens_model = tags.get('LensModel')    
+    )
+    
+    img.lens = lens
     
     return img
 

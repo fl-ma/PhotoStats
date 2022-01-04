@@ -1,14 +1,30 @@
 from django.db import models
 from datetime import datetime
 
+class Camera(models.Model):
+    camera_make =   models.CharField(max_length=100, null=True)
+    camera_model =  models.CharField(max_length=100, null=True)
+    
+    class Meta:
+        unique_together = ['camera_make', 'camera_model']
+    
+    def __str__(self):
+        return (self.camera_make + ' ' + self.camera_model)
+            
+class Lens(models.Model):
+    lens_model =    models.CharField(max_length=100, default="n/a")    
+    
+    #does not work due to empty string
+    # def __str__(self):
+    #     return (self.lens_model)
+
 class Image(models.Model):
     filename = models.CharField(max_length=200)
     path =  models.CharField(max_length=200)
     date_taken = models.DateTimeField(null=True)
-
-    camera_make =   models.CharField(max_length=100, null=True)
-    camera_model =  models.CharField(max_length=100, null=True)
-    lens_model =    models.CharField(max_length=100, null=True)
+    
+    camera = models.ForeignKey(Camera, on_delete=models.SET_NULL, null=True)
+    lens = models.ForeignKey(Lens, on_delete=models.SET_NULL, null=True)
     
     focal_length =  models.PositiveSmallIntegerField(null=True)
     exposure_time = models.FloatField(null=True)

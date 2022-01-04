@@ -3,7 +3,6 @@ Statistics about photos
 
 
 ## Open ToDos
-- camera model
 - trips/events model
 
 ## Configuration

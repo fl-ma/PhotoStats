@@ -3,7 +3,13 @@ Statistics about photos
 
 
 ## Open ToDos
+- reports
+    - filters for reports
+    - compare report (timerange 1 vs timerange 2)
+    - sort focal length, fix colours
+
 - trips/events model
+- extend datamodel of camera to type (Phone, DSLR, DSLM)
 
 ## Configuration
 1. Remove 'example_' from files in [config](./config/)

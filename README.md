@@ -3,7 +3,7 @@ Statistics about photos
 
 
 ## Open ToDos
-- enable list/delete buttons
+- enable delete button
 - camera model
 - trips/events model
 

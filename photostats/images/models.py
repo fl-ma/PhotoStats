@@ -12,7 +12,7 @@ class Camera(models.Model):
         return (self.camera_make + ' ' + self.camera_model)
             
 class Lens(models.Model):
-    lens_model =    models.CharField(max_length=100, default="n/a")    
+    lens_model =    models.CharField(max_length=100, blank=True)    
     
     #does not work due to empty string
     # def __str__(self):

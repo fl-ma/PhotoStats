@@ -60,11 +60,13 @@ def createImage(filepath, update=False):
     
     img.camera = cam
     
-    lens, created = Lens.objects.get_or_create(
-        lens_model = tags.get('LensModel')    
-    )
+    tag_lens = tags.get('LensModel')
     
-    img.lens = lens
+    if tag_lens:    
+        lens, created = Lens.objects.get_or_create(
+            lens_model = tag_lens)
+        
+        img.lens = lens
     
     return img
 

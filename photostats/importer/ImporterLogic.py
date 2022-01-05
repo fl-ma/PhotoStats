@@ -21,6 +21,15 @@ def validate_path(mypath):
         msg = str("path: " + mypath + " is invalid")
         logger.critical(msg)
         raise OSError(msg)
+    
+    #libraries can handle with and without closing \
+    #however on the database it makes a difference
+    if mypath[-1:] == '\\':
+        return mypath
+    
+    else:
+        return mypath + '\\'
+        
 
 def do_import(path, subdir=False, update=False):
     '''
@@ -62,13 +71,13 @@ def do_import(path, subdir=False, update=False):
 
 def import_folder(path, logger, subdir=False, update=False):
     
-    validate_path(path) 
+    mypath = validate_path(path) 
     images = []
     
     #handle first all images in the folder
-    for filename in os.listdir(path):
+    for filename in os.listdir(mypath):
         
-        filepath = os.path.realpath(os.path.join(path, filename))
+        filepath = os.path.realpath(os.path.join(mypath, filename))
         
         if os.path.isdir(filepath):
             #ignore directories here
@@ -92,8 +101,8 @@ def import_folder(path, logger, subdir=False, update=False):
     #then handle all subfolders (if required)
     if subdir:
     
-        for dir in os.listdir(path):
-            subdirpath = os.path.realpath(os.path.join(path, dir))
+        for dir in os.listdir(mypath):
+            subdirpath = os.path.realpath(os.path.join(mypath, dir))
             
             if not os.path.isdir(subdirpath):
                 #ignore everything that is not a directory
@@ -108,11 +117,11 @@ def import_folder(path, logger, subdir=False, update=False):
         
 def delete(path):
     
-    validate_path(path)
+    mypath = validate_path(path)
     
-    list = Image.objects.filter(path=path)
+    list = Image.objects.filter(path=mypath)
     
-    message = str(len(list)) + ' images deleted from path ' + path
+    message = str(len(list)) + ' images deleted from path ' + mypath
     
     list.delete()
     

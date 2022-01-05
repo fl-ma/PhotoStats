@@ -32,6 +32,7 @@ class Image(models.Model):
 
     class Meta:
         ordering = ["-filename"]
+        unique_together = ['filename', 'path']
 
     def __str__(self):
         return (self.path + self.filename)

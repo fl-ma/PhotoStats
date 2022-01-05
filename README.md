@@ -8,6 +8,13 @@ Statistics about photos
     - compare report (timerange 1 vs timerange 2)
     - sort focal length, fix colours
 
+- paths
+    - always end with /
+    - directories as own model
+        - incl text
+        - as tree structure?
+        - own importer
+
 - trips/events model
 - extend datamodel of camera to type (Phone, DSLR, DSLM)
 
@@ -23,6 +30,7 @@ $ python manage.py runserver
 
 ### Hints
 - Logging goes to 'BASE_DIR / 'import.log'
+- Reset database with 'python manage.py flush'
 
 
 ### Access
@@ -44,7 +52,7 @@ python3 -m venv .venv
 - $ python manage.py createsuperuser
 
 #### After changes to Models:
-- $ python manage.py makemigrations <app>
+- $ python manage.py makemigrations images
 - $ python manage.py sqlmigrate images 0001
 - $ python manage.py migrate
 

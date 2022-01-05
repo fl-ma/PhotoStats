@@ -17,6 +17,9 @@ def createImage(filepath, update=False):
     name, extension = os.path.splitext(filepath)
     path, filename  = os.path.split(filepath)
     
+    #to stay consistent
+    path += '\\'
+    
     logger = logging.getLogger(IMPORT_LOG_NAME)
 
     #filter for photo files only (exclude .dlls, .txts, etc)

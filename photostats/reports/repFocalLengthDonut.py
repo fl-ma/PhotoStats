@@ -3,6 +3,7 @@ import plotly.graph_objs as go
 
 from reports.repParent import RepParent
 from images.models import Image
+from .repConstants import COLOUR_BLUE
 
 class FocalLengthDonut(RepParent):
     
@@ -10,28 +11,44 @@ class FocalLengthDonut(RepParent):
         
         val = {}
         img_list = Image.objects.filter(camera__camera_make='Canon')
+        map = {}
         
         for img in img_list:
-            key = get_range(img.focal_length)
+            key, text = get_range(img.focal_length)
             
             if key in val:
                 val[key] += 1
             else:
+                map[key] = text
                 val[key] = 1
-        
+                
         myKeys = []
         myValues = []
+        myLabels = []
+        myColors = []
         
-        for key in sorted(val):
+        for idx, key in enumerate(sorted(val)):
             myKeys.append(key)
+            myLabels.append(map.get(key))
             myValues.append(val[key])
-            
-        self.fig = go.Figure(data=[go.Pie(labels=myKeys, values=myValues, hole=.3)])
+            myColors.append(COLOUR_BLUE[idx])
         
+            
+        self.fig = go.Figure(data=[go.Pie(
+            labels=myLabels, 
+            values=myValues, 
+            hole=.3,
+            direction ='clockwise',
+            sort=False,
+            marker =  {
+                'colors': myColors
+                }
+            )])
+
 
 def get_range(int):
     
     low = int - ( int % 10 )
     high = low + 9
     
-    return (str(low) + "-" + str(high) + " mm")
+    return low, (str(low) + "-" + str(high) + " mm")

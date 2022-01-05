@@ -12,8 +12,12 @@ Pillow==9.0.0
 platformdirs==2.4.1
 plotly==5.5.0
 pylint==2.12.2
+python-dateutil==2.8.2
+pytz==2021.3
+scipy==1.7.3
 six==1.15.0
 sqlparse==0.4.2
+statsmodels==0.13.1
 tenacity==8.0.1
 toml==0.10.2
 typing_extensions==4.0.1

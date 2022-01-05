@@ -61,19 +61,23 @@ def get_button(request):
 
 def action_list(request):  
     
-    path = request.POST.get('Ipath')
     
-    if path:
+    try:
+        path = ImporterLogic.validate_path(request.POST.get('Ipath'))
+    
+    except Exception as inst:
+        text = str(inst)
+        return HttpResponseServerError(text)
+    
+    else:
+        
         image_list = Image.objects.filter(path=path)
         
-    else:
-        image_list = Image.objects.all()
-        
-    template = loader.get_template('images/image_list.html')
-    context = {
-        'image_list' : image_list
-    }
-    return HttpResponse(template.render(context, request))
+        template = loader.get_template('images/image_list.html')
+        context = {
+            'image_list' : image_list
+        }
+        return HttpResponse(template.render(context, request))
 
 
 def action_import(request):
@@ -82,14 +86,9 @@ def action_import(request):
         recursive_scan = True
     else:
         recursive_scan = False
-        
-    if request.POST.get('radio_upd') == 'Update':
-        update = True
-    else:
-        update = False
     
     try:
-        status_list = ImporterLogic.do_import(request.POST.get('Ipath'), recursive_scan, update)
+        status_list = ImporterLogic.do_import(request.POST.get('Ipath'), recursive_scan)
         
     except Exception as inst:
         text = str(inst)

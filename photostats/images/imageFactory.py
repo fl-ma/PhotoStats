@@ -9,16 +9,12 @@ from images.imageError import ExifError
 from images.imageExif import read
 
 
-def createImage(filepath, update=False):
+def createImage(filepath):
     '''
-        update  =   true    -> query database and update existing files
-                    false   -> crate without query (might result in duplicates)
+        
     '''    
     name, extension = os.path.splitext(filepath)
     path, filename  = os.path.split(filepath)
-    
-    #to stay consistent
-    path += '\\'
     
     logger = logging.getLogger(IMPORT_LOG_NAME)
 
@@ -34,17 +30,7 @@ def createImage(filepath, update=False):
     if not tags:
         raise ExifError(filepath, "No exif tags found")
      
-    if update:
-        try:
-            img = Image.objects.get(path=path, filename=filename)
-            logger.info("IMG already in database - update")
-            
-        except:
-            img = Image()
-            logger.info("IMG not found in database - insert")
-    
-    else:
-        img = Image()
+    img = Image()
     
     #map exif tags to data model
     img.path       = path

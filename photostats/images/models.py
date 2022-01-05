@@ -1,5 +1,6 @@
 from django.db import models
 from datetime import datetime
+import os
 
 class Camera(models.Model):
     camera_make =   models.CharField(max_length=100, null=True)
@@ -35,7 +36,7 @@ class Image(models.Model):
         unique_together = ['filename', 'path']
 
     def __str__(self):
-        return (self.path + self.filename)
+        return (os.path.join(self.path, self.filename))
 
 
 def format_datetime(input):

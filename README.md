@@ -6,7 +6,6 @@ Statistics about photos
 - reports
     - filters for reports
     - compare report (timerange 1 vs timerange 2)
-    - sort focal length, fix colours
 
 - paths
     - always end with /
@@ -27,6 +26,11 @@ Statistics about photos
 $ cd photostats
 $ python manage.py runserver
 ```
+
+### External access
+When trying to access the application from a different computer:
+- settings.py, add: ALLOWED_HOSTS = ['*']
+- pythong manage.py runserver 0.0.0.0:8000
 
 ### Hints
 - Logging goes to 'BASE_DIR / 'import.log'

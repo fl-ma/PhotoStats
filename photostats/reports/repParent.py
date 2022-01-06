@@ -3,10 +3,15 @@ from plotly.graph_objects import Figure
 
 class RepParent:
     
-    def __init__(self, title):
+    def __init__(self, filters):
         
         self.fig = Figure()
-        self.title = title
+        self.title = ''
+        
+        
+        self.filters={}        
+        for filter in filters:            
+            self.filters[filter[0]]=filter[1]
         
         self.calculate_fig()
         

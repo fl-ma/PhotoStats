@@ -3,15 +3,39 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>test</title>
+  <title>Photo Statistics</title>
+  {% load static %}
+  <link rel="stylesheet" type="text/css" href="{% static 'reports/photostats.css' %}">
 </head>
 <body>
-  {% autoescape off %}
-  {{ FocalLengthDonut_div }}
-  {% endautoescape %}
+  <div id="wrapper">
 
-  {% autoescape off %}
-  {{ CamerasOverTime_div }}
-  {% endautoescape %}
+    <div id="filter" class="container">
+      <form action="{% url 'reports:index' %}" method="get">
+          {% csrf_token %}
+
+          <fieldset>
+              <legend><h1>Filter</h1></legend>
+              <select class="form-control" id="path" name='selected_path'>
+                {% for path in pathList %}
+                    <option value='{{path}}'>{{ path }}</option>
+                {% endfor %}
+            </select>
+          </fieldset>
+          <input type="submit" name="search" value="Search">
+      </form>
+    </div>
+
+    <div id="main" class="container">
+      {% autoescape off %}
+      {{ FocalLengthDonut_div }}
+      {% endautoescape %}
+
+      {% autoescape off %}
+      {{ CamerasOverTime_div }}
+      {% endautoescape %}
+    </div>
+
+  </div>
 </body>
 </html>

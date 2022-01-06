@@ -1,0 +1,19 @@
+
+/* #wrapper {
+    overflow: hidden;    
+}
+
+#main{
+    float: left;
+    width: max-content;
+}
+
+#filter{
+    width: 100px;
+    float: left;
+} */
+
+.container{
+    border: 1px solid grey;
+    margin-bottom: 3px;
+}

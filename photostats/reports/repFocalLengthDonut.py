@@ -10,7 +10,9 @@ class FocalLengthDonut(RepParent):
     def calculate_fig(self):
         
         val = {}
-        img_list = Image.objects.filter(camera__camera_make='Canon')
+        self.filters['camera__camera_make'] = 'Canon'
+        
+        img_list = Image.objects.filter(**self.filters)
         map = {}
         
         for img in img_list:

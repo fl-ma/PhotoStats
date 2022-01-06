@@ -9,8 +9,7 @@ class MobileVsCam(RepParent):
     
     def calculate_fig(self): 
         
-        
-        photos = Image.objects.all().values('date_taken__date', 'camera__camera_model').annotate(total=Count('date_taken__date')).order_by('date_taken__date')
+        photos = Image.objects.filter(**self.filters).values('date_taken__date', 'camera__camera_model').annotate(total=Count('date_taken__date')).order_by('date_taken__date')
         
         cameras = Camera.objects.all()
         

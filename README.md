@@ -4,18 +4,17 @@ Statistics about photos
 
 ## Open ToDos
 - reports
-    - filters for reports
     - compare report (timerange 1 vs timerange 2)
 
 - paths
-    - always end with /
+    - support filtering for parent folders
     - directories as own model
         - incl text
         - as tree structure?
         - own importer
 
 - trips/events model
-- extend datamodel of camera to type (Phone, DSLR, DSLM)
+- extend datamodel of camera to type (Phone, DSLR, DSLM, Owner)
 
 ## Configuration
 1. Remove 'example_' from files in [config](./config/)

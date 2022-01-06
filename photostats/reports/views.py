@@ -7,6 +7,7 @@ from images.models import Image
 
 from .repFocalLengthDonut import FocalLengthDonut
 from .repMobileVsCam import MobileVsCam
+from .repMobileVsCamRatio import MobileVsCamRatio
 
 def index(request):
     
@@ -41,10 +42,13 @@ def plot_reports(request):
     
     mobileVsCam = MobileVsCam(filter)
     
+    mobileVsCamRat = MobileVsCamRatio(filter)
+    
     
     return render(request, "reports/index.html", 
                   context={'FocalLengthDonut_div': focalDonut.plot(), 
                             'CamerasOverTime_div': mobileVsCam.plot(),
+                            'MobileVsCamRatio_div': mobileVsCamRat.plot(),
                             'path_list': path_list
                            }
                   )

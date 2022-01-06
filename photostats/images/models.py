@@ -10,7 +10,18 @@ class Camera(models.Model):
         unique_together = ['camera_make', 'camera_model']
     
     def __str__(self):
-        return (self.camera_make + ' ' + self.camera_model)
+        
+        if self.camera_make:
+            make = self.camera_make
+        else:
+            make = '<unknown>'
+
+        if self.camera_model:
+            model = self.camera_model
+        else:
+            model = '<unknown>'            
+        
+        return (make + ': ' + model)
             
 class Lens(models.Model):
     lens_model =    models.CharField(max_length=100, blank=True)    

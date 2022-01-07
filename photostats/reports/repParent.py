@@ -9,9 +9,9 @@ class RepParent:
         self.title = ''
         
         
-        self.filters={}        
-        for filter in filters:            
-            self.filters[filter[0]]=filter[1]
+        self.filters={}
+        for key, value in filters.items():            
+            self.filters[key]=value
         
         self.calculate_fig()
         

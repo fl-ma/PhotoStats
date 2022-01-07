@@ -16,9 +16,9 @@
 
           <fieldset>
               <legend><h1>Filter</h1></legend>
-              <select class="form-control" id="path" name='selected_path'>
-                {% for path in pathList %}
-                    <option value='{{path}}'>{{ path }}</option>
+              <select class="form-control" id="path" name='selected_dir'>
+                {% for dir in dirList %}
+                  <option value='{{dir.key}}'>{{ dir.title }}</option>
                 {% endfor %}
             </select>
           </fieldset>

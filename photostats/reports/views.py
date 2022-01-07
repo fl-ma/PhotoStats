@@ -4,6 +4,8 @@ from django.urls.conf import path
 
 
 from images.models import Image
+from directories.models import Directory
+from directories.directoryTree import get_directory_tree_list, selection_to_filter
 
 from .repFocalLengthDonut import FocalLengthDonut
 from .repMobileVsCam import MobileVsCam
@@ -26,17 +28,17 @@ def index(request):
     
 def init_view(request):
     
-    path_list = read_paths()
+    dir_list = get_directory_tree_list()
     
     return render(request, "reports/index.html",
-                  context={'pathList': path_list,
+                  context={'dirList': dir_list,
                            }
                   )       
     
 def plot_reports(request):
-    path_list = read_paths()
+    dir_list = get_directory_tree_list()
     
-    filter = selection_to_filter(request.GET.get('selected_path'))
+    filter = selection_to_filter(request.GET.get('selected_dir'))
     
     focalDonut = FocalLengthDonut(filter)
     
@@ -46,23 +48,11 @@ def plot_reports(request):
     
     
     return render(request, "reports/index.html", 
-                  context={'FocalLengthDonut_div': focalDonut.plot(), 
-                            'CamerasOverTime_div': mobileVsCam.plot(),
-                            'MobileVsCamRatio_div': mobileVsCamRat.plot(),
-                            'path_list': path_list
+                  context={
+                      'FocalLengthDonut_div': focalDonut.plot(), 
+                      'CamerasOverTime_div': mobileVsCam.plot(),
+                      'MobileVsCamRatio_div': mobileVsCamRat.plot(),
+                      'dirList': dir_list
                            }
                   )
     
-def selection_to_filter(input):
-    return [['path',input]]
-
-def read_paths():
-    paths = Image.objects.values_list('path')
-    path_list=[]
-    
-    for path in paths:
-        #since SQLite does not support unique on field level
-        if path[0] not in path_list:
-            path_list.append(path[0])
-            
-    return path_list

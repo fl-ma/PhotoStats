@@ -20,34 +20,30 @@ class MobileVsCamRatio(RepParent):
         
         self.fig = go.Figure()
         
-        cameras = Camera.objects.all()
+        #filter unknown cameras
+        self.filters['camera__camera_model__isnull']=False
         
-        photos_cam = Image.objects.filter(**self.filters).values('date_taken__date', 'camera__camera_model').annotate(total=Count('date_taken__date')).order_by('date_taken__date')
-        photos_tot = Image.objects.filter(**self.filters).values('date_taken__date').annotate(total=Count('date_taken__date')).order_by('date_taken__date')      
+        cameras = Camera.objects.all()
+        photos = Image.objects.filter(**self.filters)
+        
+        photos_cam = photos.values('date_taken__date', 'camera__camera_model').annotate(total=Count('date_taken__date')).order_by('date_taken__date')
+        photos_tot = photos.values('date_taken__date').annotate(total=Count('date_taken__date')).order_by('date_taken__date')      
 
         streams = {}
-        # total = DateSeries()
         
         #get a proper dictionary to enable .get()
         total_dict = {}
 
         for photo in photos_tot:
             total_dict[photo.get('date_taken__date')] = photo.get('total')
-            # total.dates.append(photo.get('date_taken__date'))
-            # total.values.append(photo.get('total'))
-            print(photo.get('date_taken__date'), photo.get('total'))
+        #     print(photo.get('date_taken__date'), photo.get('total'))
             
-        print('---------------')
+        # print('---------------')
         
                 
         for photo_cam in photos_cam:
-            
-            #@TODO: replace this by a proper filter earlier
-            if not photo_cam.get('camera__camera_model'):
-                cam_model = 'Unknown'
-                
-            else:
-                cam_model = photo_cam.get('camera__camera_model')
+
+            cam_model = photo_cam.get('camera__camera_model')
             
             cam = streams.get(cam_model)
             
@@ -59,12 +55,14 @@ class MobileVsCamRatio(RepParent):
             
             count_total = total_dict.get(photo_cam.get('date_taken__date'))
             
+            if count_total == 0 and photo_cam.get('total') > 0:
+                raise ValueError('No total found for: ' + photo_cam.get('date_taken__date') + 'but photos from ' + cam_model)
+            
             cam.values.append(photo_cam.get('total') / count_total)
             cam.texts.append(photo_cam.get('total'))
             
         
         for key, obj in streams.items():
-            print(key,obj)    
             self.fig.add_trace(go.Bar(name=key,
                                x=obj.dates,
                                y=obj.values))       

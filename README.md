@@ -5,9 +5,11 @@ Statistics about photos
 ## Open ToDos
 - reports
     - compare report (timerange 1 vs timerange 2)
+    - list number of photos next to chart
+    - show selected directory in dropbox
 
 - paths
-    - support filtering for parent folders
+    - support a tree structure in selection (see directoryTree.py for comments)
 
 - extend datamodel of camera to type (Phone, DSLR, DSLM, Owner)
 

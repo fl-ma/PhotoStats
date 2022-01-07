@@ -73,6 +73,9 @@ def import_folder(path, parent, logger, subdir=False, files_scan=False):
     if parent:
         myDir.parent = parent
         
+    if not myDir.text:
+        myDir.text = os.path.basename(myDir.path)
+        
     #save so we can access in the next step
     myDir.save()
     

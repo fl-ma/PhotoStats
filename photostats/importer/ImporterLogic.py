@@ -73,9 +73,8 @@ def import_folder(path, parent, logger, subdir=False, files_scan=False):
     if parent:
         myDir.parent = parent
         
-    if created:
-        #save so we can access in the next step
-        myDir.save()
+    #save so we can access in the next step
+    myDir.save()
     
     images = []
     

@@ -8,12 +8,7 @@ Statistics about photos
 
 - paths
     - support filtering for parent folders
-    - directories as own model
-        - incl text
-        - as tree structure?
-        - own importer
 
-- trips/events model
 - extend datamodel of camera to type (Phone, DSLR, DSLM, Owner)
 
 ## Configuration

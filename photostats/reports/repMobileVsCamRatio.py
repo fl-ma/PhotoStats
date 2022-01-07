@@ -11,7 +11,7 @@ class DateSeries():
     def __init__(self):
         self.dates = []
         self.values = []
-        self.texts = []
+        self.hover = []
         
 
 class MobileVsCamRatio(RepParent):
@@ -59,17 +59,20 @@ class MobileVsCamRatio(RepParent):
                 raise ValueError('No total found for: ' + photo_cam.get('date_taken__date') + 'but photos from ' + cam_model)
             
             cam.values.append(photo_cam.get('total') / count_total)
-            cam.texts.append(photo_cam.get('total'))
+            cam.hover.append(photo_cam.get('total'))
             
         
         for key, obj in streams.items():
-            self.fig.add_trace(go.Bar(name=key,
-                               x=obj.dates,
-                               y=obj.values))       
+            self.fig.add_trace(go.Bar(
+                                name=key,
+                                x=obj.dates,
+                                y=obj.values,
+                                # customdata=cam.hover,
+                                # hovertemplate='Share: %{y}'+'<br>Count: %{customdata}'
+                               ))       
         
-        #@TODO:
-        # - auf % umstellen
-        # texte/hover anpassen
-        # farben
-        self.fig.update_layout(barmode='relative')    
+        self.fig.update_layout(barmode='relative',
+                               yaxis=dict(
+                                   tickformat=".0%",
+                                   range=[0,1])    )
 

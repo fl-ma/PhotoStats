@@ -7,6 +7,9 @@ Statistics about photos
     - compare report (timerange 1 vs timerange 2)
     - list number of photos next to chart
     - show selected directory in dropbox
+    - change hover texts (e.g. to show totals next to percentage)
+        - works via customdata:
+            - https://stackoverflow.com/questions/59057881/python-plotly-how-to-customize-hover-template-on-with-what-information-to-show
 
 - paths
     - support a tree structure in selection (see directoryTree.py for comments)

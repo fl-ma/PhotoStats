@@ -86,9 +86,14 @@ def action_import(request):
         recursive_scan = True
     else:
         recursive_scan = False
+        
+    if request.POST.get('scan files') == 'Scan files':
+        files_scan = True
+    else:
+        files_scan = False
     
     try:
-        status_list = ImporterLogic.do_import(request.POST.get('Ipath'), recursive_scan)
+        status_list = ImporterLogic.do_import(request.POST.get('Ipath'), recursive_scan, files_scan)
         
     except Exception as inst:
         text = str(inst)

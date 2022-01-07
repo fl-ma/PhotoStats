@@ -6,6 +6,7 @@ from datetime import datetime
 from images.imageError import ExifError
 from photostats.constants import IMPORT_LOG_NAME
 from images.models import Image
+from directories.models import Directory
 
 def validate_path(mypath):
     
@@ -32,7 +33,7 @@ def validate_path(mypath):
         return mypath
         
 
-def do_import(path, subdir=False):
+def do_import(path, subdir=False, files_scan=False):
     '''
         path    = directory to scan
         subdir  = also scan files in sub directories (recursive)
@@ -49,7 +50,7 @@ def do_import(path, subdir=False):
     
     #the above is separated from the actual import below to keep the init-stuff out 
     #of the recursion
-    imgs = import_folder(path, logger, subdir)
+    imgs = import_folder(path, None, logger, subdir, files_scan)
     
     #at the very end: persists and return log     
     idx = 0
@@ -68,46 +69,55 @@ def do_import(path, subdir=False):
     f.close()
     return lines
 
-def import_folder(path, logger, subdir=False):
+def import_folder(path, parent, logger, subdir=False, files_scan=False):
     
-    mypath = validate_path(path) 
+    myDir, created = Directory.objects.get_or_create(path=validate_path(path))
+    
+    if parent:
+        myDir.parent = parent
+        
+    if created:
+        #save so we can access in the next step
+        myDir.save()
+    
     images = []
     
     #handle first all images in the folder
-    for filename in os.listdir(mypath):
-        
-        filepath = os.path.realpath(os.path.join(mypath, filename))
-        
-        if os.path.isdir(filepath):
-            #ignore directories here
-            continue
-        
-        try:
-            img = createImage(filepath)
+    if files_scan:
+        for filename in os.listdir(myDir.path):
             
-        except OSError as inst:            
-            msg = filepath + " skipped due to filetype"
-            logger.warning(msg)
-            continue
+            filepath = os.path.realpath(os.path.join(myDir.path, filename))
+            
+            if os.path.isdir(filepath):
+                #ignore directories here
+                continue
+            
+            try:
+                img = createImage(filepath)
+                
+            except OSError as inst:            
+                msg = filepath + " skipped due to filetype"
+                logger.warning(msg)
+                continue
+            
+            except ExifError as exc:
+                msg = exc.filename + ': ' + exc.message + ': skipping import'
+                logger.error(msg)
+                continue
         
-        except ExifError as exc:
-            msg = exc.filename + ': ' + exc.message + ': skipping import'
-            logger.error(msg)
-            continue
-    
-        images.append(img)
+            images.append(img)
         
     #then handle all subfolders (if required)
     if subdir:
     
-        for dir in os.listdir(mypath):
-            subdirpath = os.path.realpath(os.path.join(mypath, dir))
+        for dir in os.listdir(myDir.path):
+            subdirpath = os.path.realpath(os.path.join(myDir.path, dir))
             
             if not os.path.isdir(subdirpath):
                 #ignore everything that is not a directory
                 continue
             
-            sub_imgs = import_folder(subdirpath, logger, subdir)
+            sub_imgs = import_folder(subdirpath, myDir, logger, subdir)
             
             images.extend(sub_imgs)   
         

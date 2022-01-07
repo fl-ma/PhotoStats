@@ -7,7 +7,10 @@
         <input type="text" id="Ipath" name="Ipath" value="{{ importer.import_path }}" size="90"><br>
         
         <input type="checkbox" id="cb_recursion" name="recursion" value="recursion" checked>
-        <label for="cb_recursion"> Search subfolders</label><br>
+        <label for="cb_recursion">Scan subfolders</label><br>
+
+        <input type="checkbox" id="cb_scan_files" name="scan files" value="Scan files">
+        <label for="cb_san_files">Scan files</label><br>
 
         {% comment %} <div>
             <input type="radio" id="update" name="radio_upd" value="Update" checked>

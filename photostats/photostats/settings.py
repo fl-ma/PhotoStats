@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'images.apps.ImagesConfig',
+    'directories.apps.DirectoriesConfig',
     'importer.apps.ImporterConfig',
     'reports.apps.ReportsConfig',
     'django.contrib.admin',

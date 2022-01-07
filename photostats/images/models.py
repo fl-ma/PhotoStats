@@ -2,6 +2,8 @@ from django.db import models
 from datetime import datetime
 import os
 
+from directories.models import Directory
+
 class Camera(models.Model):
     camera_make =   models.CharField(max_length=100, null=True)
     camera_model =  models.CharField(max_length=100, null=True)
@@ -32,9 +34,9 @@ class Lens(models.Model):
 
 class Image(models.Model):
     filename = models.CharField(max_length=200)
-    path =  models.CharField(max_length=200)
     date_taken = models.DateTimeField(null=True)
     
+    path = models.ForeignKey(Directory, on_delete=models.CASCADE)
     camera = models.ForeignKey(Camera, on_delete=models.SET_NULL, null=True)
     lens = models.ForeignKey(Lens, on_delete=models.SET_NULL, null=True)
     
@@ -45,9 +47,16 @@ class Image(models.Model):
     class Meta:
         ordering = ["-filename"]
         unique_together = ['filename', 'path']
+        
+    def get_path(self):
+        return (os.path.join(self.path.path, self.filename))
+    
+    def get_file_type(self):
+        name, extension = os.path.splitext(self.get_path())
+        return extension
 
     def __str__(self):
-        return (os.path.join(self.path, self.filename))
+        return str(self.get_path())
 
 
 def format_datetime(input):

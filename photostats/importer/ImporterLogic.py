@@ -3,7 +3,7 @@ from images.imageFactory import createImage
 import logging
 from datetime import datetime
 
-from images.imageError import ExifError
+from images.imageError import ExifError, ImageError
 from photostats.constants import IMPORT_LOG_NAME
 from images.models import Image
 from directories.models import Directory
@@ -52,14 +52,11 @@ def do_import(path, subdir=False, files_scan=False):
     #of the recursion
     imgs = import_folder(path, None, logger, subdir, files_scan)
     
-    #at the very end: persists and return log     
-    idx = 0
+    #save all images at the end
     for img in imgs:
         img.save()
-        logger.info(img.path + img.filename + " saved")
-        idx += 1
         
-    logger.info(str(idx) + ' images saved')
+    logger.info(str(len(imgs)) + ' images saved')
     
     #retrieve logfile (so it can be displayed in UI)
     logfile = logger.handlers[0].baseFilename
@@ -93,31 +90,30 @@ def import_folder(path, parent, logger, subdir=False, files_scan=False):
                 continue
             
             try:
-                img = createImage(filepath)
-                
-            except OSError as inst:            
-                msg = filepath + " skipped due to filetype"
-                logger.warning(msg)
-                continue
+                img = createImage(filename, myDir)
             
             except ExifError as exc:
                 msg = exc.filename + ': ' + exc.message + ': skipping import'
                 logger.error(msg)
                 continue
-        
+            
+            except ImageError as inst:            
+                msg = filepath + " skipped due to filetype"
+                logger.warning(msg)
+                continue
             images.append(img)
         
     #then handle all subfolders (if required)
     if subdir:
     
-        for dir in os.listdir(myDir.path):
+        for dir in os.listdir(path):
             subdirpath = os.path.realpath(os.path.join(myDir.path, dir))
             
             if not os.path.isdir(subdirpath):
                 #ignore everything that is not a directory
                 continue
             
-            sub_imgs = import_folder(subdirpath, myDir, logger, subdir)
+            sub_imgs = import_folder(subdirpath, myDir, logger, subdir, files_scan)
             
             images.extend(sub_imgs)   
         

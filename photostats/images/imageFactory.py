@@ -1,42 +1,35 @@
 import os.path 
-import errno
 import os
 import logging
 
 from photostats.constants import PHOTO_FILETYPES, IMPORT_LOG_NAME
 from images.models import Image, Camera, Lens, format_datetime
-from images.imageError import ExifError
+from images.imageError import ExifError, ImageError
 from images.imageExif import read
 
 
-def createImage(filepath):
+def createImage(filename, directory):
     '''
-        
+        Create image dataset in database and add information from exif
     '''    
-    name, extension = os.path.splitext(filepath)
-    path, filename  = os.path.split(filepath)
-    
+   
     logger = logging.getLogger(IMPORT_LOG_NAME)
-
-    #filter for photo files only (exclude .dlls, .txts, etc)
-    if extension not in PHOTO_FILETYPES:
-        raise OSError(errno.EIO, "Filetype not supported", name)
     
-    logger.info(filepath + ":")
+    img, existed = Image.objects.get_or_create(filename=filename, path=directory)
+    logger.info('Processing: ' + str(img) + ":")
+
+    # filter for photo files only (exclude .dlls, .txts, etc)
+    if img.get_file_type() not in PHOTO_FILETYPES:
+        raise ImageError("Filetype not supported", str(img))
        
     # Read Exif tags 
-    tags = read(filepath)
+    tags = read(str(img.get_path()))
     
     if not tags:
-        raise ExifError(filepath, "No exif tags found")
-     
-    img = Image()
+        raise ExifError(directory.path, "No exif tags found")    
     
     #map exif tags to data model
-    img.path       = path
-    img.filename   = filename
-    
-    img.date_taken = handle_date_taken(tags, filepath)        
+    img.date_taken = handle_date_taken(tags, directory.path)        
         
     img.focal_length    = tags.get('FocalLength')
     img.exposure_time   = tags.get('ExposureTime')

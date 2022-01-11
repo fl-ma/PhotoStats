@@ -6,9 +6,9 @@ Statistics about photos
 - reports
     - compare report (timerange 1 vs timerange 2)
     - list number of photos next to chart
-    - show selected directory in dropbox
+    - show selected directory in dropdownbox
     - change hover texts (e.g. to show totals next to percentage)
-        - works via customdata:
+        - apperently works via attribute customdata:
             - https://stackoverflow.com/questions/59057881/python-plotly-how-to-customize-hover-template-on-with-what-information-to-show
 
 - paths
@@ -26,6 +26,14 @@ $ cd photostats
 $ python manage.py runserver
 ```
 
+### Use
+- [Admin overview](http://localhost:8000/admin/)
+- [Importer](http://localhost:8000/importer/)
+- [Image list](http://localhost:8000/images/)
+- [Directory list](http://localhost:8000/directories/)
+- [Reports](http://localhost:8000/reports/)
+
+
 ### External access
 When trying to access the application from a different computer:
 - settings.py, add: ALLOWED_HOSTS = ['*']
@@ -34,11 +42,6 @@ When trying to access the application from a different computer:
 ### Hints
 - Logging goes to 'BASE_DIR / 'import.log'
 - Reset database with 'python manage.py flush'
-
-
-### Access
-- [Admin overview](http://localhost:8000/admin/)
-- [Image list](http://localhost:8000/images/)
 
 ## DEV setup
 

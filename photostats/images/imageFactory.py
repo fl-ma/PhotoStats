@@ -59,7 +59,11 @@ def handle_date_taken(tags, filepath):
         date_taken = format_datetime(tags.get('DateTimeOriginal'))
     except:
         #fallback to other date field
-        date_taken = format_datetime(tags.get('DateTime'))
+        try:
+            date_taken = format_datetime(tags.get('DateTime'))
+            
+        except:
+            date_taken = None
     
     #still nothing? can't use
     if date_taken is None:

@@ -95,12 +95,12 @@ def import_folder(path, parent, logger, subdir=False, files_scan=False):
                 img = createImage(filename, myDir)
             
             except ExifError as exc:
-                msg = exc.filename + ': ' + exc.message + ': skipping import'
+                msg = filename + ': ' + exc.message + ': skipping import'
                 logger.error(msg)
                 continue
             
             except ImageError as inst:            
-                msg = filepath + " skipped due to filetype"
+                msg = filename + " skipped due to filetype"
                 logger.warning(msg)
                 continue
             images.append(img)

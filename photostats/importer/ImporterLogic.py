@@ -126,7 +126,9 @@ def delete(path):
     
     mypath = validate_path(path)
     
-    list = Image.objects.filter(path=mypath)
+    dir = Directory.objects.get(path=mypath)
+    
+    list = dir.image_set.all()
     
     message = str(len(list)) + ' images deleted from path ' + mypath
     

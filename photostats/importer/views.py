@@ -3,6 +3,7 @@ from django.http import HttpResponse, HttpResponseServerError
 from django.template import loader
 
 from images.models import Image
+from directories.models import Directory
 from . import ImporterLogic
 
 def index(request):
@@ -64,6 +65,8 @@ def action_list(request):
     
     try:
         path = ImporterLogic.validate_path(request.POST.get('Ipath'))
+        
+        dir = Directory.objects.get(path=path)
     
     except Exception as inst:
         text = str(inst)
@@ -71,7 +74,7 @@ def action_list(request):
     
     else:
         
-        image_list = Image.objects.filter(path=path)
+        image_list = dir.image_set.all()
         
         template = loader.get_template('images/image_list.html')
         context = {

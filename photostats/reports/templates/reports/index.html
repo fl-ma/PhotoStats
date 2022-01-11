@@ -1,46 +1,13 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Photo Statistics</title>
-  {% load static %}
-  <link rel="stylesheet" type="text/css" href="{% static 'reports/photostats.css' %}">
-</head>
-<body>
-  <div id="wrapper">
-
-    <div id="filter" class="container">
-      <form action="{% url 'reports:index' %}" method="get">
-          {% csrf_token %}
-
-          <fieldset>
-              <legend><h1>Filter</h1></legend>
-              <select class="form-control" id="path" name='selected_dir'>
-                {% for dir in dirList %}
-                  <option value='{{dir.key}}'>{{ dir.title }}</option>
-                {% endfor %}
-            </select>
-          </fieldset>
-          <input type="submit" name="search" value="Search">
-      </form>
-    </div>
-
-    <div id="main" class="container">
-      {% autoescape off %}
-      {{ FocalLengthDonut_div }}
-      {% endautoescape %}
-
-      {% autoescape off %}
-      {{ CamerasOverTime_div }}
-      {% endautoescape %}
-
-      {% autoescape off %}
-      {{ MobileVsCamRatio_div }}
-      {% endautoescape %}
-      
-    </div>
-
-  </div>
-</body>
+   <head>
+      <title>PhotoStats reporting overview</title>
+   </head>
+   <body>
+       <h1>All my reports</h1>
+    <ul>
+        <li><a href="/reports/timelines">Timelines</a></li>
+        <li>Compare folders</li>
+    </ul> 
+   </body>
 </html>

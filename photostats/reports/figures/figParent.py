@@ -1,7 +1,7 @@
 from plotly.offline import plot
 from plotly.graph_objects import Figure
 
-class RepParent:
+class FigParent:
     
     def __init__(self, filters):
         
@@ -13,9 +13,9 @@ class RepParent:
         for key, value in filters.items():            
             self.filters[key]=value
         
-        self.calculate_fig()
+        self.calculate()
         
-    def calculate_fig(self):
+    def calculate(self):
         pass
     
     def plot(self):

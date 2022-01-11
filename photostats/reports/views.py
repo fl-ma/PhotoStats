@@ -8,9 +8,9 @@ from images.models import Image
 from directories.models import Directory
 from directories.directoryTree import get_directory_tree_list, selection_to_filter
 
-from .repFocalLengthDonut import FocalLengthDonut
-from .repMobileVsCam import MobileVsCam
-from .repMobileVsCamRatio import MobileVsCamRatio
+from .figures.figFocalLengthDonut import FocalLengthDonut
+from .figures.figMobileVsCam import MobileVsCam
+from .figures.figMobileVsCamRatio import MobileVsCamRatio
 
 
 def index(request):

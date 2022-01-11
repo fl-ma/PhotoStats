@@ -2,12 +2,12 @@ import plotly.graph_objects as go
 from datetime import date, datetime
 from django.db.models import Count
 
-from reports.repParent import RepParent
+from .figParent import FigParent
 from images.models import Image, Camera
 
-class MobileVsCam(RepParent):
+class MobileVsCam(FigParent):
     
-    def calculate_fig(self): 
+    def calculate(self): 
         
         photos_all = Image.objects.filter(**self.filters)        
         photos = photos_all.values('date_taken__date', 'camera__camera_model').annotate(total=Count('date_taken__date')).order_by('date_taken__date')

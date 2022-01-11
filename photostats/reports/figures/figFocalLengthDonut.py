@@ -1,13 +1,13 @@
 from plotly.offline import plot
 import plotly.graph_objs as go
 
-from reports.repParent import RepParent
+from .figParent import FigParent
 from images.models import Image
-from .repConstants import COLOUR_BLUE
+from ..repConstants import COLOUR_BLUE
 
-class FocalLengthDonut(RepParent):
+class FocalLengthDonut(FigParent):
     
-    def calculate_fig(self):
+    def calculate(self):
         
         val = {}
         self.filters['camera__camera_make'] = 'Canon'

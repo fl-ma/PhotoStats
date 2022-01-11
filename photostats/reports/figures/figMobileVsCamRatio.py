@@ -2,7 +2,7 @@ import plotly.graph_objects as go
 from datetime import date, datetime
 from django.db.models import Count
 
-from reports.repParent import RepParent
+from .figParent import FigParent
 from images.models import Image, Camera
 
 
@@ -14,9 +14,9 @@ class DateSeries():
         self.hover = []
         
 
-class MobileVsCamRatio(RepParent):
+class MobileVsCamRatio(FigParent):
     
-    def calculate_fig(self): 
+    def calculate(self): 
         
         self.fig = go.Figure()
         

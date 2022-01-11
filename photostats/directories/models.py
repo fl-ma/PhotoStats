@@ -6,6 +6,10 @@ class Directory(models.Model):
     text = models.CharField(max_length=200, null=True, blank=True)
     parent = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True)
     selectable = models.BooleanField(default=False)
+    
+    @property
+    def image_count(self):
+        return self.image_set.count()
 
     def __str__(self):
         if self.text:
@@ -23,3 +27,5 @@ class Directory(models.Model):
         if not self.text:
             self.text = None
         super(Directory, self).save(*args, **kwargs)
+        
+    

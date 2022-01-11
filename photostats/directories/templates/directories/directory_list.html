@@ -1,0 +1,23 @@
+{% if directory_list %}
+    <table>
+        <tr>
+          <th>path</th>
+          <th>text</th>
+          <th>parent</th>
+          <th>selectable</th>
+          <th>image count</th>
+        </tr>
+        {% for dir in directory_list %}
+        <tr>
+          <td>{{ dir.path }}</td>
+          <td>{{ dir.text}}</td>
+          <td>{{ dir.parent}}</td>
+          <td>{{ dir.selectable}}</td>
+          <td>{{ dir.image_count}}</td>
+        </tr>
+        {% endfor %}
+      </table> 
+
+{% else %}
+    <p>No directories are available.</p>
+{% endif %}

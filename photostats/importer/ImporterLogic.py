@@ -2,6 +2,7 @@ import os.path
 from images.imageFactory import createImage
 import logging
 from datetime import datetime
+from django.db import transaction
 
 from images.imageError import ExifError, ImageError
 from photostats.constants import IMPORT_LOG_NAME
@@ -92,7 +93,9 @@ def import_folder(path, parent, logger, subdir=False, files_scan=False):
                 continue
             
             try:
-                img = createImage(filename, myDir)
+                #this will trigger a rollback when an exception is triggered
+                with transaction.atomic():
+                    img = createImage(filename, myDir)
             
             except ExifError as exc:
                 msg = filename + ': ' + exc.message + ': skipping import'

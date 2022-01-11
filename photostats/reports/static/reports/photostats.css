@@ -1,19 +1,21 @@
 
-/* #wrapper {
+#wrapper {
     overflow: hidden;    
 }
-
-#main{
-    float: left;
-    width: max-content;
-}
-
-#filter{
-    width: 100px;
-    float: left;
-} */
 
 .container{
     border: 1px solid grey;
     margin-bottom: 3px;
+}
+
+.rep_column_left{
+    width: 40%;
+    float:left;
+    border: 1px solid grey;
+}
+
+.rep_column_right{
+    width: 40%;
+    overflow: hidden;
+    border: 1px solid grey;
 }

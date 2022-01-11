@@ -11,8 +11,9 @@ Statistics about photos
         - apperently works via attribute customdata:
             - https://stackoverflow.com/questions/59057881/python-plotly-how-to-customize-hover-template-on-with-what-information-to-show
 
-- paths
+- directories
     - support a tree structure in selection (see directoryTree.py for comments)
+    - create an endpoint to list all images within one dir
 
 - extend datamodel of camera to type (Phone, DSLR, DSLM, Owner)
 

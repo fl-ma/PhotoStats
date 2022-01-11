@@ -32,7 +32,12 @@ def timelines(request):
         
     else:
         #no idea
-        return HttpResponseServerError("no action determined")   
+        return HttpResponseServerError("no action determined")
+    
+def compare(request):
+    template = loader.get_template('reports/compare.html')
+    context = {}
+    return HttpResponse(template.render(context, request))
     
 def init_view(request):
     

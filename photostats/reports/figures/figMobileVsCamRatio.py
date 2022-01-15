@@ -36,10 +36,6 @@ class MobileVsCamRatio(FigParent):
 
         for photo in photos_tot:
             total_dict[photo.get('date_taken__date')] = photo.get('total')
-        #     print(photo.get('date_taken__date'), photo.get('total'))
-            
-        # print('---------------')
-        
                 
         for photo_cam in photos_cam:
 
@@ -60,6 +56,8 @@ class MobileVsCamRatio(FigParent):
             
             cam.values.append(photo_cam.get('total') / count_total)
             cam.hover.append(photo_cam.get('total'))
+            
+            self.total_number += int(photo_cam.get('total'))
             
         
         for key, obj in streams.items():

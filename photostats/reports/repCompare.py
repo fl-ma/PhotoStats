@@ -36,12 +36,12 @@ class RepCompare(RepParent):
         #left column        
         filter = selection_to_filter(self.request.POST.get('selected_dir_left'))
         
-        focalDonutLeft = FocalLengthDonut(filter)
+        focalDonutLeft = FocalLengthDonut(filter, 'focalDonutLeft')
         
         #right column
         filter = selection_to_filter(self.request.POST.get('selected_dir_right'))
         
-        focalDonutRight = FocalLengthDonut(filter)        
+        focalDonutRight = FocalLengthDonut(filter, 'focalDonutRight')        
         
         self.context={
                 'FocalLengthDonutLeft_div': focalDonutLeft.plot(), 

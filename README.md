@@ -4,8 +4,6 @@ Statistics about photos
 
 ## Open ToDos
 - reports
-    - compare report (timerange 1 vs timerange 2)
-    - list number of photos next to chart
     - show selected directory in dropdownbox
     - change hover texts (e.g. to show totals next to percentage)
         - apperently works via attribute customdata:

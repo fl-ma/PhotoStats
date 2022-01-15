@@ -1,0 +1,11 @@
+<div id="{{ div_id }}" class="figure_div">
+    {% if Title %}
+    <h3>{{ Title }}</h2>
+    {% endif %}
+    {% autoescape off %}
+    {{ Figure }}
+    {% endautoescape %}
+    {% if Count %}
+    <p align="right">#Images: {{ Count }}&nbsp;</p>
+    {% endif %}
+</div>

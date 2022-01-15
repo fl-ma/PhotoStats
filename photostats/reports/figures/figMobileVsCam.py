@@ -14,6 +14,8 @@ class MobileVsCam(FigParent):
         
         cameras = Camera.objects.all()
         
+        self.total_number = photos_all.count()
+        
         for cam in cameras:
             
             if not cam.camera_model:

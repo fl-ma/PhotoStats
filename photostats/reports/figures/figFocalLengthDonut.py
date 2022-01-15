@@ -35,6 +35,7 @@ class FocalLengthDonut(FigParent):
             myValues.append(val[key])
             myColors.append(COLOUR_BLUE[idx])
         
+        self.total_number = img_list.count()
             
         self.fig = go.Figure(data=[go.Pie(
             labels=myLabels, 

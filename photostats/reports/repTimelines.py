@@ -35,11 +35,11 @@ class RepTimelines(RepParent):
         
         filter = selection_to_filter(self.request.GET.get('selected_dir'))
         
-        focalDonut = FocalLengthDonut(filter)
+        focalDonut = FocalLengthDonut(filter, 'focalDonut')
         
-        mobileVsCam = MobileVsCam(filter)
+        mobileVsCam = MobileVsCam(filter, 'mobileVsCam', 'Mobile vs. Camera - absolute')
         
-        mobileVsCamRat = MobileVsCamRatio(filter)
+        mobileVsCamRat = MobileVsCamRatio(filter, 'mobileVsCamRat', 'Mobile vs. Camera - ratio')
         
         self.context={
                 'FocalLengthDonut_div': focalDonut.plot(), 

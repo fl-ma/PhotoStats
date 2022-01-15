@@ -10,27 +10,36 @@
 <body>
   <div id="wrapper">
 
-    <div id="left_top" class="rep_column_left">
-        here goes filter left
-    </div>
-    <div id="right_top" class="rep_column_right">
-        here goes filter right
-    </div>
-    <div id="joint">
-        <form action="{% url 'reports:compare' %}" method="post">
-            {% csrf_token %}
-  
-            {% comment %} <fieldset>
-                <legend><h1>Filter</h1></legend>
-                <select class="form-control" id="path" name='selected_dir'>
-                  {% for dir in dirList %}
-                    <option value='{{dir.key}}'>{{ dir.title }}</option>
-                  {% endfor %}
-              </select>
-            </fieldset> {% endcomment %}
-            <input type="submit" name="search" value="Search">
-        </form>        
-    </div>
+    <form action="{% url 'reports:compare' %}" method="post">
+      {% csrf_token %}    
+      <fieldset>      
+      <div id="left_top" class="rep_column_left">
+        <legend><h1>Filter 1</h1></legend>
+        <select class="form-control" id="path_left" name='selected_dir_left'>
+          {% for dir in dirList %}
+            <option value='{{dir.key}}'>{{ dir.title }}</option>
+          {% endfor %}
+      </select>
+      </div>
+      
+      <div id="right_top" class="rep_column_right">
+        <legend><h1>Filter 2</h1></legend>
+        <select class="form-control" id="path_right" name='selected_dir_right'>
+          {% for dir in dirList %}
+            <option value='{{dir.key}}'>{{ dir.title }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div id="joint">
+          
+
+
+              
+              <input type="submit" name="search" value="Search">
+              
+      </div>
+    </fieldset>
+    </form>    
     <div id="left_main" class="rep_column_left">
         {% autoescape off %}
             {{ FocalLengthDonutLeft_div }}

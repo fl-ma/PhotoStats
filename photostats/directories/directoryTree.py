@@ -62,6 +62,9 @@ def get_directory_tree_list():
 
 def selection_to_filter(input):
     
+    if not input:
+        raise ValueError("No filter values")
+    
     pk = int(input)
     selection = Directory.objects.get(pk=pk)
     

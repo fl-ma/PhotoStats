@@ -3,15 +3,8 @@ from django.http import HttpResponse, HttpResponseServerError
 from django.urls.conf import path
 from django.template import loader
 
-
-from images.models import Image
-from directories.models import Directory
-from directories.directoryTree import get_directory_tree_list, selection_to_filter
-
-from .figures.figFocalLengthDonut import FocalLengthDonut
-from .figures.figMobileVsCam import MobileVsCam
-from .figures.figMobileVsCamRatio import MobileVsCamRatio
-
+from .repTimelines import RepTimelines
+from .repCompare import RepCompare
 
 def index(request):
     
@@ -22,50 +15,23 @@ def index(request):
 
 def timelines(request):
     
-    action = request.GET.get('search')
+    try:
+        report = RepTimelines(request)
+        
+        return report.render()        
+        
+    except Exception as inst:
+        text = str(inst)
+        return HttpResponseServerError(text)
     
-    if not action:
-        return init_view(request)
-        
-    elif action == 'Search':
-        return plot_reports(request)
-        
-    else:
-        #no idea
-        return HttpResponseServerError("no action determined")
     
 def compare(request):
-    template = loader.get_template('reports/compare.html')
-    context = {}
-    return HttpResponse(template.render(context, request))
     
-def init_view(request):
-    
-    dir_list = get_directory_tree_list()
-    
-    return render(request, "reports/timelines.html",
-                  context={'dirList': dir_list,
-                           }
-                  )       
-    
-def plot_reports(request):
-    dir_list = get_directory_tree_list()
-    
-    filter = selection_to_filter(request.GET.get('selected_dir'))
-    
-    focalDonut = FocalLengthDonut(filter)
-    
-    mobileVsCam = MobileVsCam(filter)
-    
-    mobileVsCamRat = MobileVsCamRatio(filter)
-    
-    
-    return render(request, "reports/timelines.html", 
-                  context={
-                      'FocalLengthDonut_div': focalDonut.plot(), 
-                      'CamerasOverTime_div': mobileVsCam.plot(),
-                      'MobileVsCamRatio_div': mobileVsCamRat.plot(),
-                      'dirList': dir_list
-                           }
-                  )
-    
+    try:
+        report = RepCompare(request)
+        
+        return report.render()        
+        
+    except Exception as inst:
+        text = str(inst)
+        return HttpResponseServerError(text) 

@@ -1,11 +1,13 @@
 from .repParent import RepParent
-from directories.directoryTree import get_directory_tree_list, selection_to_filter
+from directories.directoryTree import selection_to_filter
+from directories.directorySelector import getHtml
 
 from .figures.figFocalLengthDonut import FocalLengthDonut
-from .figures.figMobileVsCam import MobileVsCam
-from .figures.figMobileVsCamRatio import MobileVsCamRatio
 
-class RepCompare(RepParent):
+SEL_LEFT = 'selectorLeft'
+SEL_RIGHT = 'selectorRight'
+
+class RepCompare(RepParent):   
     
     def __init__(self, request):
         super().__init__(request)
@@ -19,7 +21,8 @@ class RepCompare(RepParent):
         if not action:
             #initialize view
             self.context={
-                'dirList': get_directory_tree_list()   ,
+                'FilterLeft':  getHtml(div_id='FilterLeft',selector_name=SEL_LEFT, title='Directory 1')   ,
+                'FilterRight': getHtml(div_id='FilterRight',selector_name=SEL_RIGHT, title='Directory 2')   ,
                             }  
             
         elif action == 'Search':
@@ -31,20 +34,20 @@ class RepCompare(RepParent):
         
     
     def plot_reports(self):
-        dir_list = get_directory_tree_list()
         
         #left column        
-        filter = selection_to_filter(self.request.POST.get('selected_dir_left'))
+        filter = selection_to_filter(self.request.POST.get(SEL_LEFT))
         
         focalDonutLeft = FocalLengthDonut(filter, 'focalDonutLeft')
         
         #right column
-        filter = selection_to_filter(self.request.POST.get('selected_dir_right'))
+        filter = selection_to_filter(self.request.POST.get(SEL_RIGHT))
         
         focalDonutRight = FocalLengthDonut(filter, 'focalDonutRight')        
         
         self.context={
+                'FilterLeft': getHtml(div_id='FilterLeft',selector_name=SEL_LEFT, title='Directory 1'),
+                'FilterRight': getHtml(div_id='FilterRight',selector_name=SEL_RIGHT, title='Directory 2'),
                 'FocalLengthDonutLeft_div': focalDonutLeft.plot(), 
                 'FocalLengthDonutRight_div': focalDonutRight.plot(),
-                'dirList' : dir_list,
             }

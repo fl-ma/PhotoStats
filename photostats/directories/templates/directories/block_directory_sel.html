@@ -1,0 +1,8 @@
+{% if Title %}
+<legend><h3>{{ Title }}</h3></legend>
+{% endif %}
+<select class="form-control" id="{{ DivId }}" name='{{ SelectorName }}'>
+    {% for dir in dirList %}
+        <option value='{{dir.key}}'>{{ dir.title }}</option>
+    {% endfor %}
+</select>    

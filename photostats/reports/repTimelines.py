@@ -1,9 +1,13 @@
 from .repParent import RepParent
-from directories.directoryTree import get_directory_tree_list, selection_to_filter
+from directories.directoryTree import selection_to_filter
+from directories.directorySelector import getHtml
 
 from .figures.figFocalLengthDonut import FocalLengthDonut
 from .figures.figMobileVsCam import MobileVsCam
 from .figures.figMobileVsCamRatio import MobileVsCamRatio
+
+
+SEL_DIR = 'selected_dir'
 
 class RepTimelines(RepParent):
     
@@ -19,8 +23,8 @@ class RepTimelines(RepParent):
         if not action:
             #initialize view
             self.context={
-                'dirList': get_directory_tree_list()   ,
-                            }  
+                'DirectoryFilter': getHtml(div_id='dir_sel', selector_name=SEL_DIR)
+                }  
             
         elif action == 'Search':
             return self.plot_reports()
@@ -31,9 +35,8 @@ class RepTimelines(RepParent):
         
     
     def plot_reports(self):
-        dir_list = get_directory_tree_list()
         
-        filter = selection_to_filter(self.request.GET.get('selected_dir'))
+        filter = selection_to_filter(self.request.GET.get(SEL_DIR))
         
         focalDonut = FocalLengthDonut(filter, 'focalDonut')
         
@@ -45,5 +48,5 @@ class RepTimelines(RepParent):
                 'FocalLengthDonut_div': focalDonut.plot(), 
                 'CamerasOverTime_div': mobileVsCam.plot(),
                 'MobileVsCamRatio_div': mobileVsCamRat.plot(),
-                'dirList': dir_list 
+                'DirectoryFilter': getHtml(div_id='dir_sel', selector_name=SEL_DIR)
             }

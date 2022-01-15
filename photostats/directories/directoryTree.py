@@ -60,21 +60,6 @@ def get_directory_tree_list():
         
     return dirs
 
-def selection_to_filter(input):
-    
-    if not input:
-        raise ValueError("No filter values")
-    
-    pk = int(input)
-    selection = Directory.objects.get(pk=pk)
-    
-    pk_list = [selection.pk]
-    
-    pk_list.extend( read_dir_and_children(selection))
-    
-    return {'path__pk__in': pk_list}
-
-
 def read_dir_and_children(parent: Directory):
     
     children = Directory.objects.filter(parent=parent)

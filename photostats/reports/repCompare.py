@@ -1,6 +1,5 @@
 from .repParent import RepParent
-from directories.directoryTree import selection_to_filter
-from directories.directorySelector import getHtml
+from directories.directorySelector import DirectorySelector
 
 from .figures.figFocalLengthDonut import FocalLengthDonut
 
@@ -17,12 +16,15 @@ class RepCompare(RepParent):
         super().build()
     
         action = self.request.POST.get('search')
+        
+        selRight = DirectorySelector()
+        selLeft = DirectorySelector()
 
         if not action:
             #initialize view
             self.context={
-                'FilterLeft':  getHtml(div_id='FilterLeft',selector_name=SEL_LEFT, title='Directory 1')   ,
-                'FilterRight': getHtml(div_id='FilterRight',selector_name=SEL_RIGHT, title='Directory 2')   ,
+                'FilterLeft':  selLeft.getHtml(div_id='FilterLeft',selector_name=SEL_LEFT, title='Directory 1')   ,
+                'FilterRight': selRight.getHtml(div_id='FilterRight',selector_name=SEL_RIGHT, title='Directory 2')   ,
                             }  
             
         elif action == 'Search':
@@ -35,19 +37,19 @@ class RepCompare(RepParent):
     
     def plot_reports(self):
         
-        #left column        
-        filter = selection_to_filter(self.request.POST.get(SEL_LEFT))
+        #left column
+        selLeft = DirectorySelector(self.request.POST.get(SEL_LEFT))
         
-        focalDonutLeft = FocalLengthDonut(filter, 'focalDonutLeft')
+        focalDonutLeft = FocalLengthDonut(selLeft.get_selected_as_filter(), 'focalDonutLeft', title='Focal length distribution')
         
         #right column
-        filter = selection_to_filter(self.request.POST.get(SEL_RIGHT))
+        selRight = DirectorySelector(self.request.POST.get(SEL_RIGHT))
         
-        focalDonutRight = FocalLengthDonut(filter, 'focalDonutRight')        
+        focalDonutRight = FocalLengthDonut(selRight.get_selected_as_filter(), 'focalDonutRight', title='Focal length distribution')        
         
         self.context={
-                'FilterLeft': getHtml(div_id='FilterLeft',selector_name=SEL_LEFT, title='Directory 1'),
-                'FilterRight': getHtml(div_id='FilterRight',selector_name=SEL_RIGHT, title='Directory 2'),
+                'FilterLeft': selLeft.getHtml(div_id='FilterLeft',selector_name=SEL_LEFT, title='Directory 1'),
+                'FilterRight': selRight.getHtml(div_id='FilterRight',selector_name=SEL_RIGHT, title='Directory 2'),
                 'FocalLengthDonutLeft_div': focalDonutLeft.plot(), 
                 'FocalLengthDonutRight_div': focalDonutRight.plot(),
             }

@@ -4,10 +4,12 @@ Statistics about photos
 
 ## Open ToDos
 - reports
-    - show selected directory in dropdownbox
     - change hover texts (e.g. to show totals next to percentage)
-        - apperently works via attribute customdata:
+        - apparently works via attribute customdata:
             - https://stackoverflow.com/questions/59057881/python-plotly-how-to-customize-hover-template-on-with-what-information-to-show
+
+    - compare:
+        - harmonize colours over charts (e.g. same focal length to always use same colour)
 
 - directories
     - support a tree structure in selection (see directoryTree.py for comments)

@@ -3,6 +3,10 @@
 {% endif %}
 <select class="form-control" id="{{ DivId }}" name='{{ SelectorName }}'>
     {% for dir in dirList %}
-        <option value='{{dir.key}}'>{{ dir.title }}</option>
+        {% if dir.key == Selected %}
+            <option value='{{dir.key}}' selected>{{ dir.title }}</option>
+        {% else %}
+            <option value='{{dir.key}}'>{{ dir.title }}</option>
+        {% endif %}
     {% endfor %}
 </select>    

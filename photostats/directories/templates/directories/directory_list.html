@@ -1,6 +1,7 @@
 {% if directory_list %}
     <table>
         <tr>
+          <th>ID</th>
           <th>path</th>
           <th>text</th>
           <th>parent</th>
@@ -9,6 +10,7 @@
         </tr>
         {% for dir in directory_list %}
         <tr>
+          <td><b>{{ dir.pk }}</b></td>
           <td>{{ dir.path }}</td>
           <td>{{ dir.text}}</td>
           <td>{{ dir.parent}}</td>

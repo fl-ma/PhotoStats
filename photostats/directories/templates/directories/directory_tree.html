@@ -1,0 +1,24 @@
+{% if directory_list %}
+<div>
+    <table>
+        <tr>
+          <th>ID</th>
+          <th>path</th>
+          <th>text</th>
+          <th>parent</th>
+          <th>selectable</th>
+          <th>image count</th>
+        </tr>
+        {% for dir in directory_list %}
+        {% autoescape off %}
+        {{ dir }}
+        {% endautoescape %}
+        {% endfor %}
+    </table> 
+</div>      
+<div>
+    Here goes the button row (e.g. all selectable, clear all texts)
+</div>
+{% else %}
+    <p>No directories are available.</p>
+{% endif %}

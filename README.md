@@ -32,6 +32,7 @@ $ python manage.py runserver
 - [Importer](http://localhost:8000/importer/)
 - [Image list](http://localhost:8000/images/)
 - [Directory list](http://localhost:8000/directories/)
+- [Directory tree](http://localhost:8000/directories/tree)
 - [Reports](http://localhost:8000/reports/)
 
 

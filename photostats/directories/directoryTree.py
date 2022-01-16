@@ -1,64 +1,43 @@
 from .models import Directory
 
-
-class DirectoryTreeElement:
-    
-    def __init__(self, dir_obj: Directory):
-        self.key   = dir_obj.pk
-        
-        # self.title = get_title(dir_obj, prefix)
-        self.title = str(dir_obj)
-    
-# Tree idea pause for now due to complexity
-# if I choose a subfolder to be selectable but not it's parent. how to handle?
+from .directoryTreeEl import DirectoryTreeElement
 
 
-# def get_title(dir_obj, prefix):
-#     if prefix:
-#         title = prefix + ' ' + str(dir_obj)
+class DirectoryTree:
     
-#     else:
-#         title = str(dir_obj)
+    def __init__(self, model: Directory, depth: int):
+        self.element = DirectoryTreeElement(model, depth)
+        self.children = []
         
-#     return title
+        child_models = Directory.objects.filter(parent=model)
+        
+        for child_model in child_models:
+            child = DirectoryTree(child_model, depth+1)
+                
+            self.children.append(child)
 
 
-# def get_dir_and_children(parent: Directory, prefix = '') -> list:
-    
-#     dirs = []    
-#     dirs.append(DirectoryTreeElement(parent, prefix))
-    
-#     children_db = Directory.objects.filter(parent=parent)
-    
-#     if not prefix:
-#         childPrefix = ' -'
-    
-#     else:
-#         childPrefix = prefix + '-'
-    
-    
-#     for child in children_db:
-#         dirs.append(DirectoryTreeElement(child, childPrefix))
+    def get_as_list(self):
         
-#         get_dir_and_children(child, childPrefix)
-    
-#     return dirs
-
-
-def get_directory_tree_list():
-    
-    dirs_db = Directory.objects.filter(selectable = True)
+        list = []
+        
+        for child in self.children:
+            list.extend(get_tree_list(child))
+            
+        return list
         
         
-    dirs = []
+def get_tree_list(parent: DirectoryTree):
+    
+    list = []
+    
+    if parent.element.model.selectable:
+        list.append(parent.element)
         
-    for dir in dirs_db:
-        dirs.append(DirectoryTreeElement(dir))
-        
-        # children = get_dir_and_children(dir, '')            
-        # dirs.extend(children)
-        
-    return dirs
+    for child in parent.children:
+        list.extend(get_tree_list(child))
+    
+    return list
 
 def read_dir_and_children(parent: Directory):
     

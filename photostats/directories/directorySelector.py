@@ -1,7 +1,7 @@
 from django.template import loader
 
 from .models import Directory
-from .directoryTree import get_directory_tree_list, read_dir_and_children
+from .directoryTree import read_dir_and_children, DirectoryTree
 
 
 class DirectorySelector():
@@ -17,12 +17,14 @@ class DirectorySelector():
             selectedDir = int(self.selected_pk)
         else:
             selectedDir = None
+            
+        tree = DirectoryTree(None, 0)
         
         context = {
             'DivId': div_id,
             'Title': title,
             'SelectorName': selector_name,
-            'dirList': get_directory_tree_list(),
+            'dirList': tree.get_as_list(),
             'Selected': selectedDir,
         }
         

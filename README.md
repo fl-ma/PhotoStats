@@ -1,7 +1,10 @@
 # PhotoStats
 Imports photo metadate from the files' exif tags into the specified DJANGO database. Thereby allows (semi-) performant analytics on that data.
 
+## Disclaimer
+The software comes without any warranty or even implied warranty. It is highly recommended to take a backup of all folders that this software might be used for.
 
+I mainly developed this software to make some practical use of my python training and to get some insight on my own data. There is no guarantee that bugs will ever get fixed or additional features will be added.
 
 ## Features
 

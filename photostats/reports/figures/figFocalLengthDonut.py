@@ -14,6 +14,7 @@ class FocalLengthDonut(FigParent):
         
         img_list = Image.objects.filter(**self.filters)
         map = {}
+        myColorsDict = {}
         
         for img in img_list:
             key, text = get_range(img.focal_length)
@@ -24,10 +25,20 @@ class FocalLengthDonut(FigParent):
                 map[key] = text
                 val[key] = 1
                 
+            if key not in myColorsDict:
+                myColorsDict[key] = get_color_for_low(key)
+        
         myKeys = []
         myValues = []
         myLabels = []
-        myColors = []
+        myColors = []        
+        
+        colorKey = sorted(myColorsDict.keys())
+        
+        for color in colorKey:
+            myColors.append(myColorsDict[color])
+        
+        pass        
         
         for idx, key in enumerate(sorted(val)):
             myKeys.append(key)
@@ -55,3 +66,7 @@ def get_range(int):
     high = low + 9
     
     return low, (str(low) + "-" + str(high) + " mm")
+
+def get_color_for_low(low):
+    idx = int(low/10)
+    return COLOUR_BLUE[idx]

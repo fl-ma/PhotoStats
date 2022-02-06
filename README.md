@@ -103,8 +103,6 @@ Restarting VS Code and killing all breakpoints seems also to help (sometimes).
         - apparently works via attribute customdata:
             - https://stackoverflow.com/questions/59057881/python-plotly-how-to-customize-hover-template-on-with-what-information-to-show
 
-    - compare:
-        - harmonize colours/categories over charts (e.g. same focal length to always use same colour)
     - timeline:
         - change button from GET to POST
 

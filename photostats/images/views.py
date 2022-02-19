@@ -8,4 +8,3 @@ from .models import Image
 
 class ListAllView(generic.ListView):
     model = Image
-    

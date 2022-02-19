@@ -5,10 +5,12 @@ class ImageError(Exception):
     Args:
         Error ([type]): [description]
     """
+
     def __init__(self, filename, message):
         self.filename = filename
-        self.message  = message
-        
+        self.message = message
+
+
 class ExifError(ImageError):
     """Error during exif handling
 

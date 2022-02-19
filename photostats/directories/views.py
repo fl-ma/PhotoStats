@@ -11,7 +11,7 @@ class ListAllView(generic.ListView):
 
 
 def tree(request):
-    
+
     uiTree = DirectoryTreeUi(request)
 
     return HttpResponse(uiTree.render())

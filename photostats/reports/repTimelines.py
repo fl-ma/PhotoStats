@@ -23,7 +23,7 @@ class RepTimelines(RepParent):
         if not action:
             #initialize view
             self.context={
-                'DirectoryFilter': dirSelector.getHtml(div_id='dir_sel', selector_name=SEL_DIR)
+                'DirectoryFilter': dirSelector.get_html(div_id='dir_sel', selector_name=SEL_DIR)
                 }  
             
         elif action == 'Search':
@@ -49,5 +49,5 @@ class RepTimelines(RepParent):
                 'FocalLengthDonut_div': focalDonut.plot(), 
                 'CamerasOverTime_div': mobileVsCam.plot(),
                 'MobileVsCamRatio_div': mobileVsCamRat.plot(),
-                'DirectoryFilter': dirSelector.getHtml(div_id='dir_sel', selector_name=SEL_DIR)
+                'DirectoryFilter': dirSelector.get_html(div_id='dir_sel', selector_name=SEL_DIR)
             }

@@ -6,5 +6,4 @@ app_name = 'importer'
 urlpatterns = [
     path('', views.index, name='index'),
     path('action', views.action, name='action'),
-    # path('', views.action, name='list'),
 ]

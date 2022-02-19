@@ -156,7 +156,7 @@ LOGGING = {
             'handlers': ['console'],
             'level': 'WARNING',
         },
-        
+
         'importer': {
             'handlers': ['importfile'],
             'level': 'INFO',
